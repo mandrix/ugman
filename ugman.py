@@ -26,19 +26,40 @@ f.pack()
 resultado.pack()
 root.mainloop()
 """
-accion = input("que ataque quieres realizar: ").lower()
+
 class personajes:
+    def turno(self, other,accion):
+        if self.stun != 0:
+            print("%s está estuneado por %d más, no pudo atacar" % (self.nombre,self.stun-1))
+            self.stun -= 1
+        else:
+            if accion == "a":
+                daño = (self / other)
+                print("%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
+            elif accion == "q":
+                pass
+            elif accion == "w":
+                self.defensa_cambiar(90)
+                self.stun_funcion()
+                print("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
+
+            print("============\n %s: %dHP\n %s: %dHP" % (self.nombre,self.vida,other.nombre,other.vida))
+
+
     def __truediv__(self, other):#ataque neto
         ataque = self.ataque
         defensa = other.defensa
         if self.clase == "guerrero":
 
             if randint(1,100) < self.presicion_critica:
-                print("si es")
-                return (ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100))*2
+                print("*CRITICO*")
+                daño = (ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100))*2
+                other.vida -= daño
+                return daño
             else:
-                print("no es ")
-                return ataque - (ataque * defensa / 100)
+                daño = ataque - (ataque * defensa / 100)
+                other.vida -= daño
+                return daño
         else:
 
             if randint(1, 100) < self.presicion_critica:
@@ -46,6 +67,8 @@ class personajes:
             else:
                 return ataque - (ataque * defensa / 100)
     def __init__(self,**kwargs):
+        self.stun = 0
+        self.nombre = kwargs["nombre"]
         self.vida = kwargs["vida"]# cantidad de vida :v
         self.defensa = kwargs["defensa"]# porcentaje de ataque que se reduce
         self.ataque = kwargs["ataque"]# daño de ataque fijo
@@ -61,7 +84,11 @@ class personajes:
         self.velocidad = kwargs["velocidad"]#alcance para moverse en su turno "cantidad de casillas"
     def defensa_cambiar(self,opcion):
         self.defensa = opcion
+    def stun_funcion(self):
+        self.stun = 1
+
 class guerrero(personajes):
+    def vidaf(self):return self.vida
     """
     pasiva : daño critico x2
     ataque basico : melee
@@ -146,22 +173,42 @@ class abejita ():
 
 
 
-ugman2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
+J2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, clase = "guerrero")
+                 resistencia_debuff = 25, rapidez = 45, velocidad = 10, clase = "guerrero", nombre = "Jugador2")
 
-ugman = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
+J1 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, clase = "guerrero")
-
-def guerrero_habilidades():
-    if accion == "q":
-        ugman.defensa_cambiar(90)
-    if accion == "w":
+                 resistencia_debuff = 25, rapidez = 45, velocidad = 10 ,clase = "guerrero", nombre = "Jugador1")
 
 
 
-print(ugman2 / ugman)
+def info(turno):
+    print("##############TURNO %d##############\n"%(turno),15*"=")
+    print("J1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion))
+    print("\n\n")
+    print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion))
+    print(15*"=","\n")
+def ini():
+    n = 1
+    while True:
+        info(n)
+        if J1.vida <= 0: return "Jugador2"
+        if J2.vida <= 0: return "Jugador1"
+        if J1.rapidez < J2.rapidez:
+            pass
+        elif J1.rapidez > J2.rapidez:
+            pass
+        else:
+            if randint(0,1):
+                print("%s:\n"%(J2.nombre))
+                tecla = input("Que ataque quieres realizar: ").lower()
+                print("Turno de %s\n"%(J2.nombre),J2.turno(J1,tecla))
+            else:
+                print("%s:\n"%(J1.nombre))
+                tecla = input("Que ataque quieres realizar: ").lower()
+                print("Turno de %s\n"%(J1.nombre),J1.turno(J2,tecla))
+        n+=1
 
-guerrero_habilidades()
-print("def", ugman2 / ugman)
+if __name__ == '__main__':
+    print(ini()," a ganado!")
