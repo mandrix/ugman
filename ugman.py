@@ -1,16 +1,36 @@
 from random import randint
+import random
 
 
+#globales
+n = 1#los turnos
+console = False# bool que dice si está en modo consola
+NPC_NOMBRES = ["Abaet","Bildon","Codern","Darmor","Etran","Gibolock","Hydale","Ithric","Lerin","Nuwolf","Orin","Radag'mal","Ethan"]
+ACCIONES = ["a","q","w","e","r"]#todas las acciones posibles
+primerTurno = True
+quienComienza = ""
 
 class personajes:
+
+
+
+
     def turno(self, other,accion):
+
+        def infoVida(self, other):
+            return ("\n============\n %s: %dHP\n %s: %dHP\n" % (self.nombre, self.vida, other.nombre, other.vida))
+
         if self.stun != 0:
-            print("%s está estuneado por %d más, no pudo atacar" % (self.nombre,self.stun-1))
+            print("%s está estuneado por %d más turnos, no pudo atacar" % (self.nombre,self.stun-1))
             self.stun -= 1
+            return ("%s está estuneado por %d más turnos, no pudo atacar" % (self.nombre,self.stun-1))
         else:
             if accion == "a":
                 daño = (self / other)
-                print("%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
+                if console:
+                    print("\n%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
+                else:
+                    return ("\n%s atacó a %s con %d\n%s" % (self.nombre,other.nombre,daño,infoVida(self,other)))
             elif accion == "q":
                 pass
             elif accion == "w":
@@ -19,6 +39,7 @@ class personajes:
                 print("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
 
             print("============\n %s: %dHP\n %s: %dHP" % (self.nombre,self.vida,other.nombre,other.vida))
+
 
 
     def __truediv__(self, other):#ataque neto
@@ -42,7 +63,9 @@ class personajes:
             else:
                 return ataque - (ataque * defensa / 100)
     def __init__(self,**kwargs):
-        self.stun = 0
+
+
+        """
         self.nombre = kwargs["nombre"]
         self.vida = kwargs["vida"]# cantidad de vida :v
         self.defensa = kwargs["defensa"]# porcentaje de ataque que se reduce
@@ -57,6 +80,7 @@ class personajes:
         self.rapidez = kwargs["rapidez"]#el tiempo para que llego cada turno
         self.clase = kwargs["clase"]
         self.velocidad = kwargs["velocidad"]#alcance para moverse en su turno "cantidad de casillas"
+        """
     def defensa_cambiar(self,opcion):
         self.defensa = opcion
     def stun_funcion(self):
@@ -72,6 +96,22 @@ class guerrero(personajes):
     e :
     r :
     """
+    def __init__(self):
+        self.stun = 0
+        self.vida = 500
+        self.defensa = 14
+        self.ataque = 55
+        self.magia = 0
+        self.resistencia_magica = 9
+        self.presicion = 45
+        self.daño_critico = 1.5
+        self.presicion_critica = 34
+        self.mana = 0
+        self.resistencia_debuff = 25
+        self.rapidez = 45
+        self.velocidad = 10
+        self.clase = "guerrero"
+        self.nombre = ""
 class arquero():
     pass
     """
@@ -145,9 +185,13 @@ class abejita ():
     pass
 
 
-nom1 = nom2 = ""
+
+J1 = guerrero()
+J2 = guerrero()
 
 
+
+"""
 J2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
                  resistencia_debuff = 25, rapidez = 45, velocidad = 10, clase = "guerrero", nombre = nom2)
@@ -155,25 +199,75 @@ J2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magi
 J1 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
                  resistencia_debuff = 25, rapidez = 45, velocidad = 10 ,clase = "guerrero", nombre = nom1)
+"""
 
 
+def info(turno, Mas = True ,enseñar = False):
+    if not enseñar:
+        global primerTurno, quienComienza
+        if primerTurno:
+            quienComienza = ((J1.nombre if J1.rapidez > J2.rapidez else J2.nombre) if J1.rapidez != J2.rapidez else (J1.nombre if random.random() < 0.5 else J2.nombre ))
+            primerTurno = False
+        else:
+            if quienComienza == J1.nombre:
+                quienComienza = J2.nombre
+            else:
+                quienComienza = J1.nombre
 
-def info(turno):
-    print("##############TURNO %d##############\n"%(turno),15*"=")
-    print("J1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion))
-    print("\n\n")
-    print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion))
-    print(15*"=","\n")
+    if console:
+        print("##############TURNO %d##############\n"%(turno),15*"=")
+        print("J1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion))
+        print("\n\n")
+        print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion))
+        print(15*"=","\n")
+    if not enseñar:
+        return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %d\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
+                "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %d\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
+                % (turno,J1.nombre,J1.clase,J1.vida,J1.daño_critico,J1.defensa,J1.presicion_critica,J1.ataque,J1.mana,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.presicion,
+                   J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.presicion_critica,J2.ataque,J2.mana,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.presicion, quienComienza))
+    else:
+        if not Mas:
+            BarraDeVida = ""
+            vida1 = J1.vida
 
-    return ("##############TURNO %d##############\n"%(turno),15*"=","\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d\n" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion),"\n\n","\nJ2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d\n" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion),15*"=","\n")
+            while True:
+                porcentaje = vida1 - (500 * (1 / 10))
+                if porcentaje >= 0:
+                    BarraDeVida+="□"
+                    vida1-=(500*(1/10))
+                else:
+                    break
 
-n = 1
-def ini():
+            BarraDeVida2 = ""
+            vida2 = J2.vida
+
+            while True:
+                porcentaje = vida2 - (500 * (1 / 10))
+                if porcentaje >= 0:
+                    BarraDeVida2+="□"
+                    vida2-=(500*(1/10))
+                else:
+                    break
+            return ("%s: %s\n%s: %s\n" % (J1.nombre, BarraDeVida,J2.nombre, BarraDeVida2))
+        else:
+            return (
+            "##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %d\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
+            "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %d\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
+            % (
+            turno, J1.nombre, J1.clase, J1.vida, J1.daño_critico, J1.defensa, J1.presicion_critica, J1.ataque, J1.mana,
+            J1.magia, J1.resistencia_debuff, J1.resistencia_magica, J1.velocidad, J1.presicion,
+            J2.nombre, J2.clase, J2.vida, J2.daño_critico, J2.defensa, J2.presicion_critica, J2.ataque, J2.mana,
+            J2.magia, J2.resistencia_debuff, J2.resistencia_magica, J2.velocidad, J2.presicion, quienComienza))
+
+
+def ini(teclaParam=""):
+
+
     global n
-    while True:
+    while console:
         info(n)
-        if J1.vida <= 0: return "Jugador2"
-        if J2.vida <= 0: return "Jugador1"
+        if J1.vida <= 0: return "¡Jugador2 a Ganado!"
+        if J2.vida <= 0: return "¡Jugador1 a Ganado!"
         if J1.rapidez < J2.rapidez:
             pass
         elif J1.rapidez > J2.rapidez:
@@ -188,4 +282,19 @@ def ini():
                 tecla = input("Que ataque quieres realizar: ").lower()
                 print("Turno de %s\n"%(J1.nombre),J1.turno(J2,tecla))
         n+=1
+    else:
+        while True:
+            info(n)
+            if J1.vida <= 0: return "Jugador2"
+            if J2.vida <= 0: return "Jugador1"
 
+            if quienComienza == J1.nombre:
+                return (J2.turno(J1, teclaParam),"\n%s\n" % (info(n)))
+            else:
+                return (J1.turno(J2, teclaParam),"\n%s\n" % (info(n)))
+            n += 1
+
+#si inicia este archivo en vez del ui.py entonces se juega en modo consola
+
+if __name__ == "__main__":
+    console = True
