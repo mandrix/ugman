@@ -1,31 +1,6 @@
 from random import randint
-from tkinter import *
-from tkinter import ttk
-"""
-root = Tk()
-root.geometry("450x450")
-root.title("Ugman")
 
- 
-frame = Frame(root)
- 
-labelText = StringVar()
- 
-label = Label(frame, textvariable=labelText)
-button = Button(frame, text="jugar")
- 
-labelText.set("ugman")
-label.pack()
-button.pack()
-frame.pack()
-resultado = Frame(root)
-r = StringVar()
-f = Label(resultado, textvariable=r)
-r.set()
-f.pack()
-resultado.pack()
-root.mainloop()
-"""
+
 
 class personajes:
     def turno(self, other,accion):
@@ -170,16 +145,16 @@ class abejita ():
     pass
 
 
-
+nom1 = nom2 = ""
 
 
 J2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, velocidad = 10, clase = "guerrero", nombre = "Jugador2")
+                 resistencia_debuff = 25, rapidez = 45, velocidad = 10, clase = "guerrero", nombre = nom2)
 
 J1 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
                  presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, velocidad = 10 ,clase = "guerrero", nombre = "Jugador1")
+                 resistencia_debuff = 25, rapidez = 45, velocidad = 10 ,clase = "guerrero", nombre = nom1)
 
 
 
@@ -189,8 +164,12 @@ def info(turno):
     print("\n\n")
     print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion))
     print(15*"=","\n")
+
+    return ("##############TURNO %d##############\n"%(turno),15*"=","\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d\n" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion),"\n\n","\nJ2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d\n" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion),15*"=","\n")
+
+n = 1
 def ini():
-    n = 1
+    global n
     while True:
         info(n)
         if J1.vida <= 0: return "Jugador2"
@@ -210,5 +189,3 @@ def ini():
                 print("Turno de %s\n"%(J1.nombre),J1.turno(J2,tecla))
         n+=1
 
-if __name__ == '__main__':
-    print(ini()," a ganado!")
