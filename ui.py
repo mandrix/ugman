@@ -1,8 +1,11 @@
 from tkinter import *
 import ugman
 import random
+import tkinter.messagebox
 
 param2 = ugman.NPC_NOMBRES[random.randint(0,12)]
+param1 = ugman.NPC_NOMBRES[random.randint(0,12)]
+
 mas_menos = False
 
 def local_mult():
@@ -47,6 +50,8 @@ def local_mult_ini():
 
 
 
+
+
 #UN JUGADOR
 
 def enseñarInfo_func():
@@ -71,7 +76,7 @@ def enseñarInfo_func():
         except:
             pass
         enseñarInfoMas = Button(root, text="Mas", fg="red", bg="black", command=enseñarInfo_func)
-        enseñarInfoMas.grid(row=5, column=0)
+        enseñarInfoMas.grid(row=5, column=0, sticky=W)
         mas_menos = True
     else:
 
@@ -91,45 +96,107 @@ def enseñarInfo_func():
         enseñarInfoMenos.grid(row=5, column=0)
         mas_menos = False
 
-def accionUJ():
-    log.destroy()
+def accionUJ(event=""):
 
-    accion = str(Accion.get()).lower()
-    if accion not in ugman.ACCIONES:
+    if event != "" and event.char != " ":
+        accion = event.char
+    else:
+        accion = str(Accion.get()).lower()
+
+    if ugman.quienComienza == ugman.J1.nombre and accion == "":
+        tkinter.messagebox.showinfo("Error","Debes poner una accion")
+    else:
+        log.destroy()
+
+
+    if accion not in ugman.ACCIONES and accion != "" or accion != " ":
         pass
     else:
         logNuevo = ugman.ini(accion)
         un_jugador_ini(logNuevo)
 
+def habilidadesJ1Func():
+    mensaje = tkinter.messagebox.showinfo("Habilidades J1", ugman.J1.habilidades)
+
+def habilidadesJ2Func():
+    mensaje = tkinter.messagebox.showinfo("Habilidades J2", ugman.J2.habilidades)
+
 def un_jugador_ini(logParam = ""):
     Comenzar.destroy()
     Nombre1.destroy()
     nombreJ1.grid_remove()
+    recordar.grid_remove()
+
+    try:
+        habilidadesJ2.destroy()
+        habilidadesJ1.destroy()
+        Accion.destroy()
+        AccionButton.destroy()
+        Info.destroy()
+        logMas.destroy()
+    except:
+        pass
+
+    if recordarVar.get() == 1:
+        nombreRec = open("guardado.txt","w+")
+        nombreRec.write(nombreJ1.get())
+        nombreRec.close()
 
     root.resizable(height=True, width=True)
 
+    frameTop = Frame(root)
+    frameTop.grid(row=0,column=0)
 
-    param1 = "Valkoor"#nombreJ1.get()
+    global param1
+    try:
+        nombreRec = open("guardado.txt","r")
+        nom = nombreRec.read()
+        nombreRec.close()
+        param1 = nom
+
+    except:
+        if nombreJ1.get() != "":
+            param1 = nombreJ1.get()
+
     ugman.J1.nombre = param1
 
-    global param2
+    global param2, logMas
     ugman.J2.nombre = param2
 
-    salir = Button(root, text="Salir", bg="black", fg="red", command=root.destroy)
-    salir.grid(row=4,column=0)
+    logMas = Label(frameTop, text=ugman.info(ugman.n, False, True), fg="green", bg="black")
+    logMas.grid(row=0, column=2, sticky=N)
 
-    global Accion, log, enseñarInfo
-    enseñarInfo = Button(root, text="Mas", fg="red", bg="black", command=enseñarInfo_func)
-    enseñarInfo.grid(row=5, column=0)
-    AccionButton = Button(root, text="ACCIÓN", fg="red", bg="black", command=accionUJ)
-    AccionButton.grid(row=6, column=0)
-    Accion = Entry(root)
-    Accion.grid(row=6, column=1)
+    salir = Button(frameTop, text="Salir", command=root.destroy)
+    salir.grid(row=0,column=0)
+
+    global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
+    habilidadesJ1 = Button(frameTop, text="Habilidades J1", fg="white", bg="blue", command=habilidadesJ1Func)
+    habilidadesJ1.grid(row=1, column=0)
+
+    habilidadesJ2 = Button(frameTop, text="Habilidades J2", fg="white", bg="red", command=habilidadesJ2Func)
+    habilidadesJ2.grid(row=2, column=0)
+
+    root.bind("q", accionUJ)
+    root.bind("w", accionUJ)
+    root.bind("e", accionUJ)
+    root.bind("r", accionUJ)
+    root.bind("a", accionUJ)
+    root.bind("<space>", accionUJ)
+
+    AccionButton = Button(frameTop, text="ACCIÓN o PASAR", fg="red", bg="black", command=accionUJ)
+    AccionButton.grid(row=4, column=0)
+
+    Info = Button(frameTop, text="Información", fg="white", bg="yellow")
+    Info.grid(row=3, column=0)
+
+    Accion = Entry(frameTop)
+    Accion.grid(row=4, column=1)
+
     if logParam == "":
         log = Label(root,text=ugman.info(ugman.n), fg="green", bg="black")
     else:
         log = Label(root, text=logParam, fg="green", bg="black")
-    log.grid(row=5, column=1)
+    log.grid(row=0, column=1)
 
 
 
@@ -138,10 +205,22 @@ def un_jugador():
     local.destroy()
     unJug.destroy()
 
-    global Comenzar, Nombre1, nombreJ1
+    global Comenzar, Nombre1, nombreJ1, recordar, recordarVar
+    recordarVar = IntVar()
+    recordar = Checkbutton(root, text="Recordar nombre", variable=recordarVar)
+    recordar.grid(row=4, column=1)
+    recordarVar2 = IntVar()
+    recordar = Checkbutton(root, text="Modo teclas", variable=recordarVar2)
+    recordar.grid(row=4, column=2)
     Comenzar = Button(root, text="Comenzar", fg="red", bg="black", command=un_jugador_ini)
     Nombre1 = Label(root, text="J1", fg="red")
-    nombreJ1 = Entry(root)
+    try:
+        nom = open("guardado.txt","r")
+        nom_r = nom.read()
+        nombreJ1 = Entry(root)
+        nombreJ1.insert(0,nom_r)
+    except:
+        nombreJ1 = Entry(root)
 
 
     Comenzar.grid(row=2)
@@ -168,7 +247,6 @@ def start_func():
 
 root = Tk()
 root.title("UGMAN")
-
 
 
 icon = PhotoImage(file="ugman.png")
