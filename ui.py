@@ -109,7 +109,7 @@ def accionUJ(event=""):
         log.destroy()
 
 
-    if accion not in ugman.ACCIONES and accion != "" or accion != " ":
+    if accion not in ugman.ACCIONES and accion != "":
         pass
     else:
         logNuevo = ugman.ini(accion)
@@ -209,9 +209,6 @@ def un_jugador():
     recordarVar = IntVar()
     recordar = Checkbutton(root, text="Recordar nombre", variable=recordarVar)
     recordar.grid(row=4, column=1)
-    recordarVar2 = IntVar()
-    recordar = Checkbutton(root, text="Modo teclas", variable=recordarVar2)
-    recordar.grid(row=4, column=2)
     Comenzar = Button(root, text="Comenzar", fg="red", bg="black", command=un_jugador_ini)
     Nombre1 = Label(root, text="J1", fg="red")
     try:

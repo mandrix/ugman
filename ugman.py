@@ -14,15 +14,7 @@ quienComienza = ""
 class personajes:
 
 
-    def opcion(self):
-        #Inteligencias artificiales dependiendo de la clase
-        if self.clase == "guerrero":
-            prob = randint(0,99)
-            if prob < 40 and prob >= 0:return "a"
-            elif prob < 55 and prob >= 40:return "q"
-            elif prob < 70 and prob >= 55:return "w"
-            elif prob < 85 and prob >= 70:return "e"
-            else:return "r"
+
 
     def turno(self, other,accion):
 
@@ -127,6 +119,15 @@ class guerrero(personajes):
     r : haces 150 daño bruto pero estas estuneado por 2 turnos
     """
 
+    def opcion(self):
+        #Inteligencias artificiales dependiendo de la clase
+        prob = randint(0,99)
+        if prob < 40 and prob >= 0:return "a"#40%
+        elif prob < 55 and prob >= 40:return "q"#15%
+        elif prob < 70 and prob >= 55:return "w"#15%
+        elif prob < 85 and prob >= 70:return "e"#15%
+        else:return "r"#15%
+
     def GUE_ultra(self,other):
         if not self.ultra:
 
@@ -148,7 +149,7 @@ class guerrero(personajes):
 
     def __init__(self):
         #habilidades
-        self.habilidades = "\rQ: Aumenta velocidad a 18\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
+        self.habilidades = "Pasiva: daño critico x2\n\rQ: Aumenta velocidad a 18\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
 
 
         self.ultra = False
@@ -354,25 +355,27 @@ def ini(teclaParam="", multijugador = False):
 
             global quienComienza
 
+            #quien va primero dependiendo de velocidad
             if randint(0,99) < J1.velocidad:
                 quienComienza = J2.nombre
-                time.sleep(0.5)
+
                 return (J1.turno(J2, teclaParam), "\n*Va %s por su velocidad*\n%s\n" % (J1.nombre,info(n)))
             elif randint(0,99) < J2.velocidad:
                 quienComienza = J1.nombre
-                time.sleep(0.5)
+
                 return (J2.turno(J1, J2.opcion()), "\n*Va %s por su velocidad*\n%s\n" % (J2.nombre,info(n)))
 
 
+            #quien va primero dependiendo de quien fue antes
             if quienComienza == J1.nombre:
                 quienComienza = J2.nombre
-                time.sleep(0.5)
+
                 if J1.presicion > randint(0,99):
                     return ("*La precision de %s lo hizo fallar*\n%s" % (J1.nombre, info(n)))
                 return (J1.turno(J2, teclaParam), "\n%s\n" % (info(n)))
             else:
                 quienComienza = J1.nombre
-                time.sleep(0.5)
+
                 if J2.presicion > randint(0,99):
                     return ("*La precision de %s lo hizo fallar*\n%s" % (J2.nombre, info(n)))
                 return (J2.turno(J1, J2.opcion()), "\n%s\n" % (info(n)))
