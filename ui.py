@@ -5,7 +5,8 @@ import tkinter.messagebox
 
 param2 = ugman.NPC_NOMBRES[random.randint(0,12)]
 param1 = ugman.NPC_NOMBRES[random.randint(0,12)]
-
+clases = ["gue", "arq"]
+claseJ2 = clases[random.randint(0,len(clases))-1]
 mas_menos = False
 
 def local_mult():
@@ -125,6 +126,8 @@ def un_jugador_ini(logParam = ""):
     global param2, logMas
     global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
 
+    ugman.definir_clase(claseJ1, claseJ2)
+
 
     Comenzar.destroy()
     Nombre1.destroy()
@@ -142,7 +145,7 @@ def un_jugador_ini(logParam = ""):
         pass
 
     if recordarVar.get() == 1:
-        nombreRec = open("guardado.txt","w+")
+        nombreRec = open(".guardado","w+")
         nombreRec.write(nombreJ1.get())
         nombreRec.close()
 
@@ -153,7 +156,7 @@ def un_jugador_ini(logParam = ""):
 
     global param1
     try:
-        nombreRec = open("guardado.txt","r")
+        nombreRec = open(".guardado","r")
         nom = nombreRec.read()
         nombreRec.close()
         param1 = nom
@@ -203,31 +206,100 @@ def un_jugador_ini(logParam = ""):
     log.grid(row=0, column=1)
 
 
+def un_jugador_escogio(clase):
+    global Comenzar, Nombre1, nombreJ1, recordar, recordarVar, claseJ1
 
-def un_jugador():
-    #funcion al darle el boton un jugador
-    local.destroy()
-    unJug.destroy()
+    claseJ1 = clase
 
-    global Comenzar, Nombre1, nombreJ1, recordar, recordarVar
     recordarVar = IntVar()
     recordar = Checkbutton(root, text="Recordar nombre", variable=recordarVar)
     recordar.grid(row=4, column=1)
     Comenzar = Button(root, text="Comenzar", fg="red", bg="black", command=un_jugador_ini)
     Nombre1 = Label(root, text="J1", fg="red")
+
     try:
-        nom = open("guardado.txt","r")
+        nom = open(".guardado", "r")
         nom_r = nom.read()
         nombreJ1 = Entry(root)
-        nombreJ1.insert(0,nom_r)
+        nombreJ1.insert(0, nom_r)
     except:
         nombreJ1 = Entry(root)
-
 
     Comenzar.grid(row=2)
     Nombre1.grid(row=3, column=0)
     nombreJ1.grid(row=3, column=1)
 
+
+def ARQ1():
+    top.destroy()
+    un_jugador_escogio("arq")
+
+def GUE1():
+    top.destroy()
+    un_jugador_escogio("gue")
+
+def un_jugador():
+    global top#guerreroButt, arqueraButt, orcoButt, magoButt, curanderaButt, paladinButt, berzerkerButt, asesinoButt, cazadorButt, vampiroButt, pirataButt, duendeButt, carroñeroButt, brujaButt, ninjaButt, zombieButt
+
+    #funcion al darle el boton un jugador
+    local.destroy()
+    unJug.destroy()
+
+    w = 15
+
+    top = Frame(root)
+    top.grid(row=1, column=1)
+
+    guerreroButt = Button(top, text="Guerrero", bg="grey", width= w, command=GUE1)
+    guerreroButt.grid(row=0,column=0)
+
+    arqueraButt = Button(top, text="Arquera", bg="green", width= w, command=ARQ1)
+    arqueraButt.grid(row=0,column=1)
+
+    orcoButt = Button(top, text="Orco", bg="#808040", width= w)
+    orcoButt.grid(row=0,column=2)
+
+    magoButt = Button(top, text="Mago", bg="#0000ff", width= w)
+    magoButt.grid(row=0,column=3)
+
+    curanderaButt = Button(top, text="Curandera", bg="#800040", width= w)
+    curanderaButt.grid(row=1,column=0)
+
+    paladinButt = Button(top, text="Paladin", bg="#ffff80", width= w)
+    paladinButt.grid(row=1,column=1)
+
+    berzerkerButt = Button(top, text="Berzerker", bg="#ff0000", width= w)
+    berzerkerButt.grid(row=1,column=2)
+
+    asesinoButt = Button(top, text="Asesino", bg="#800000", width= w)
+    asesinoButt.grid(row=1,column=3)
+
+    cazadorButt = Button(top, text="Cazador", bg="#004000", width= w)
+    cazadorButt.grid(row=2,column=0)
+
+    vampiroButt = Button(top, text="Vampiro", bg="#000000", fg="white", width= w)
+    vampiroButt.grid(row=2,column=1)
+
+    pirataButt = Button(top, text="Pirata", bg="#408080", width= w)
+    pirataButt.grid(row=2,column=2)
+
+    duendeButt = Button(top, text="Duende", bg="#00ff00", width= w)
+    duendeButt.grid(row=2,column=3)
+
+    carroñeroButt = Button(top, text="Carroñero", bg="#ff8000", width= w)
+    carroñeroButt.grid(row=3,column=0)
+
+    brujaButt = Button(top, text="Bruja", bg="#400040", width= w)
+    brujaButt.grid(row=3,column=1)
+
+    ninjaButt = Button(top, text="Ninja", bg="#c0c0c0", width= w)
+    ninjaButt.grid(row=3,column=2)
+
+    zombieButt = Button(top, text="Zombie", bg="#008040", width= w)
+    zombieButt.grid(row=3,column=3)
+
+#       bombermanButt = Button(top, text="Bomberman", bg="green")
+#        bombermanButt.grid(row=0,column=1)
 
 
 def start_func():

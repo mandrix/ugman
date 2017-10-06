@@ -6,7 +6,7 @@ import time
 #globales
 n = 1#los turnos
 console = False# bool que dice si está en modo consola
-NPC_NOMBRES = ["Abaet","Bildon","Codern","Darmor","Etran","Gibolock","Hydale","Ithric","Lerin","Nuwolf","Orin","Radag'mal","Ethan"]
+NPC_NOMBRES = ["Abaet","Bildon","Codern","Darmor","Etran","Gibolock","Hydale","Ithric","Lerin","Nuwolf","Orin","Radag'mal","Ethan","Tyrion"]
 ACCIONES = ["a","q","w","e","r"]#todas las acciones posibles
 primerTurno = True
 quienComienza = ""
@@ -87,23 +87,7 @@ class personajes:
                 daño = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * self.defensa / 100)
                 other.vida -= (daño / 2)
 
-    def __init__(self,**kwargs):
-        """
-        self.nombre = kwargs["nombre"]
-        self.vida = kwargs["vida"]# cantidad de vida :v
-        self.defensa = kwargs["defensa"]# porcentaje de ataque que se reduce
-        self.ataque = kwargs["ataque"]# daño de ataque fijo
-        self.magia = kwargs["magia"]# daño magico fijo
-        self.resistencia_magica = kwargs["resistencia_magica"]#porcentaje de magia que se reduce
-        self.presicion = kwargs["presicion"]# porcentaje de posibilidad de pegar debuff
-        self.daño_critico = kwargs["daño_critico"]# porcentaje de aumento de daño ataque
-        self.presicion_critica = kwargs["presicion_critica"]#porcentaje de que haya golpe critico
-        self.mana = kwargs["mana"]#cantidad para arrojar hechizos
-        self.resistencia_debuff = kwargs["resistencia_debuff"]# porcentaje de posibilidad de resistir un debuff
-        self.rapidez = kwargs["rapidez"]#el tiempo para que llego cada turno
-        self.clase = kwargs["clase"]
-        self.velocidad = kwargs["velocidad"]#alcance para moverse en su turno "cantidad de casillas"
-        """
+
 
 
     def defensa_cambiar(self,opcion):
@@ -169,16 +153,15 @@ class guerrero(personajes):
         self.presicion = randint(15,18)#probabilidad de fallar
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.presicion_critica = randint(34,40)#probabilidad de golpe critico
-        self.mana = 0
         self.presicion_debuff = randint(20,24)
         self.resistencia_debuff = randint(8,12)
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
-        self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
+        self.clase = "Guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
 
 
-class arquero():
+class arquero(personajes):
     """
     pasiva : cada golpe hara un segundo golpe de la mitad de su ataque a otro objetivo al azar
     ataque basico : alcance
@@ -237,6 +220,7 @@ class arquero():
         self.ultra = False
         self.stun = 0
         self.vida = randint(375,425)#vida del jugador
+        self.guardar_vida = self.vida
         self.defensa = randint(8,12)#porcentaje que bloquea del ataque
         self.ataque = randint(40,45)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
         self.magia = 0
@@ -248,7 +232,7 @@ class arquero():
         self.resistencia_debuff = randint(25, 30)
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
-        self.clase = "arquero"#dependiendo de la clases, cambia stats, AI y pasivas
+        self.clase = "Arquera"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
         self.inmunidad = 0
 
@@ -316,20 +300,22 @@ class pirata():
     silencia la pasiva del enemigo por 3 turnos
     """
 
-J1 = guerrero()
-J2 = guerrero()
 
 
+def definir_clase(claseJ1, claseJ2):
+    global J1, J2
+    if claseJ1 == "gue":
+        J1 = guerrero()
+    elif claseJ1 == "arq":
+        J1 = arquero()
 
-"""
-J2 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
-                 presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, velocidad = 10, clase = "guerrero", nombre = nom2)
 
-J1 = guerrero(vida = 500, defensa = 14, ataque = 55, magia = 0, resistencia_magica = 9,
-                 presicion = 45, daño_critico = 1.5, presicion_critica = 34, mana = 0,
-                 resistencia_debuff = 25, rapidez = 45, velocidad = 10 ,clase = "guerrero", nombre = nom1)
-"""
+    if claseJ2 == "gue":
+        J2 = guerrero()
+    elif claseJ2 == "arq":
+        J2 = arquero()
+
+
 
 
 def info(turno, Mas = True ,enseñar = False):
@@ -339,6 +325,8 @@ def info(turno, Mas = True ,enseñar = False):
             quienComienza = ((J1.nombre if J1.rapidez > J2.rapidez else J2.nombre) if J1.rapidez != J2.rapidez else (J1.nombre if random.random() < 0.5 else J2.nombre ))
             primerTurno = False
 
+
+
     if console:
         print("##############TURNO %d##############\n"%(turno),15*"=")
         print("J1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.presicion))
@@ -346,10 +334,10 @@ def info(turno, Mas = True ,enseñar = False):
         print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.presicion))
         print(15*"=","\n")
     if not enseñar:
-        return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
-                "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
-                % (turno,J1.nombre,J1.clase,J1.vida,J1.daño_critico,J1.defensa,J1.presicion_critica,J1.ataque,J1.mana,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.presicion,
-                   J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.presicion_critica,J2.ataque,J2.mana,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.presicion, quienComienza))
+        return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
+                "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
+                % (turno,J1.nombre,J1.clase,J1.vida,J1.daño_critico,J1.defensa,J1.presicion_critica,J1.ataque,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.presicion,
+                   J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.presicion_critica,J2.ataque,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.presicion, quienComienza))
     else:
         if not Mas:
             BarraDeVida = ""
@@ -376,12 +364,12 @@ def info(turno, Mas = True ,enseñar = False):
             return ("%s: \n%s\n%s: \n%s\n" % (J1.nombre, BarraDeVida,J2.nombre, BarraDeVida2))
         else:
             return (
-            "##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
-            "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMana: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
+            "##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
+            "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nPresicion_critica: %d\nAtaque: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
             % (
-            turno, J1.nombre, J1.clase, J1.vida, J1.daño_critico, J1.defensa, J1.presicion_critica, J1.ataque, J1.mana,
+            turno, J1.nombre, J1.clase, J1.vida, J1.daño_critico, J1.defensa, J1.presicion_critica, J1.ataque,
             J1.magia, J1.resistencia_debuff, J1.resistencia_magica, J1.velocidad, J1.presicion,
-            J2.nombre, J2.clase, J2.vida, J2.daño_critico, J2.defensa, J2.presicion_critica, J2.ataque, J2.mana,
+            J2.nombre, J2.clase, J2.vida, J2.daño_critico, J2.defensa, J2.presicion_critica, J2.ataque,
             J2.magia, J2.resistencia_debuff, J2.resistencia_magica, J2.velocidad, J2.presicion, quienComienza))
 
 

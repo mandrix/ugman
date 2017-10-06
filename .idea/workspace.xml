@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     <list default="true" id="dce021d1-9607-4f60-b218-59271697b5ad" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
@@ -11,6 +12,13 @@
 =======
     <list default="true" id="dce021d1-9607-4f60-b218-59271697b5ad" name="Default" comment="" />
 >>>>>>> 09c0e594a5efd7baecee50a1d237b89ac3b72312
+=======
+    <list default="true" id="dce021d1-9607-4f60-b218-59271697b5ad" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ugman.py" afterPath="$PROJECT_DIR$/ugman.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui.py" afterPath="$PROJECT_DIR$/ui.py" />
+    </list>
+>>>>>>> Stashed changes
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +32,7 @@
       <file leaf-file-name="ui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< HEAD
             <state relative-caret-position="1836">
               <caret line="111" column="53" lean-forward="false" selection-start-line="111" selection-start-column="53" selection-end-line="111" selection-end-column="53" />
@@ -31,6 +40,10 @@
             <state relative-caret-position="102">
               <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
 >>>>>>> 09c0e594a5efd7baecee50a1d237b89ac3b72312
+=======
+            <state relative-caret-position="-3502">
+              <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -41,6 +54,7 @@
       <file leaf-file-name="ugman.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ugman.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< HEAD
             <state relative-caret-position="-833">
               <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
@@ -48,6 +62,10 @@
             <state relative-caret-position="323">
               <caret line="392" column="49" lean-forward="true" selection-start-line="392" selection-start-column="49" selection-end-line="392" selection-end-column="49" />
 >>>>>>> 09c0e594a5efd7baecee50a1d237b89ac3b72312
+=======
+            <state relative-caret-position="714">
+              <caret line="153" column="24" lean-forward="false" selection-start-line="153" selection-start-column="24" selection-end-line="153" selection-end-column="24" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -82,6 +100,10 @@
       <find>rapidez</find>
       <find>velocidad</find>
       <find>global logMenos</find>
+      <find>guardad</find>
+      <find>bind</find>
+      <find>mana</find>
+      <find>un_ju</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -106,7 +128,7 @@
     <option name="height" value="744" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -119,24 +141,10 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ugman" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ugman" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ugman.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -553,6 +561,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ui.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         <state relative-caret-position="1836">
           <caret line="111" column="53" lean-forward="false" selection-start-line="111" selection-start-column="53" selection-end-line="111" selection-end-column="53" />
@@ -560,6 +569,10 @@
         <state relative-caret-position="102">
           <caret line="127" column="0" lean-forward="false" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
 >>>>>>> 09c0e594a5efd7baecee50a1d237b89ac3b72312
+=======
+        <state relative-caret-position="-3502">
+          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -568,6 +581,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ugman.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         <state relative-caret-position="-833">
           <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
@@ -575,6 +589,10 @@
         <state relative-caret-position="323">
           <caret line="392" column="49" lean-forward="true" selection-start-line="392" selection-start-column="49" selection-end-line="392" selection-end-column="49" />
 >>>>>>> 09c0e594a5efd7baecee50a1d237b89ac3b72312
+=======
+        <state relative-caret-position="714">
+          <caret line="153" column="24" lean-forward="false" selection-start-line="153" selection-start-column="24" selection-end-line="153" selection-end-column="24" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
