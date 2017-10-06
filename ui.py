@@ -8,6 +8,7 @@ param1 = ugman.NPC_NOMBRES[random.randint(0,12)]
 clases = ["gue", "arq"]
 claseJ2 = clases[random.randint(0,len(clases))-1]
 mas_menos = False
+primerTurno = True
 
 def local_mult():
     #funcion al darle el boton local multijugador
@@ -123,10 +124,12 @@ def habilidadesJ2Func():
     mensaje = tkinter.messagebox.showinfo("Habilidades J2", ugman.J2.habilidades)
 
 def un_jugador_ini(logParam = ""):
-    global param2, logMas
+    global param2, logMas, primerTurno
     global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
 
-    ugman.definir_clase(claseJ1, claseJ2)
+    if primerTurno:
+        ugman.definir_clase(claseJ1, claseJ2)
+        primerTurno = False
 
 
     Comenzar.destroy()

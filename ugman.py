@@ -26,40 +26,42 @@ class personajes:
                 self.stun = 0
             return ("%s está estuneado por %d más turnos, no pudo atacar" % (self.nombre,self.stun-1))
         else:
-            if accion == "a":
-                daño = (self / other)
-                if console:
-                    print("\n%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
+            if self.clase == "Guerrero":
+                if accion == "a":
+                    daño = (self / other)
+                    if console:
+                        print("\n%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
+                    else:
+                        return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
+                elif accion == "q":
+                    self.velocidad_cambiar(20)
+                    return ("%s ahora tiene una velocidad de %d\n" % (
+                    self.nombre, self.velocidad))
+                elif accion == "w":
+                    self.defensa_cambiar(30)
+                    self.stun_funcion(1)
+                    print("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
+                    return ("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
+                elif accion == "e":
+                    self.golpeCritico_cambiar(0)
+                    self.velocidad_cambiar(0)
+                    daño = self.GUE_critico(other)
+                    return ("%s ahora tiene una velocidad y golpe critico de %d\n%s atacó a %s con %s"
+                            % (self.nombre, self.velocidad,self.nombre,other.nombre,daño))
                 else:
-                    return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
-            elif accion == "q":
-                self.velocidad_cambiar(20)
-                return ("%s ahora tiene una velocidad de %d\n" % (
-                self.nombre, self.velocidad))
-            elif accion == "w":
-                self.defensa_cambiar(30)
-                self.stun_funcion(1)
-                print("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
-                return ("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
-            elif accion == "e":
-                self.golpeCritico_cambiar(0)
-                self.velocidad_cambiar(0)
-                daño = self.GUE_critico(other)
-                return ("%s ahora tiene una velocidad y golpe critico de %d\n%s atacó a %s con %s"
-                        % (self.nombre, self.velocidad,self.nombre,other.nombre,daño))
-            else:
-                print ("mkonijnuhvyvtfcre000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
-                self.stun_funcion(2)
-                daño = self.GUE_ultra(other)
-                return ("%s atacó a %s con %s usando la ULTRA\nY estará estuneado por %d turnos"
-                    % ( self.nombre, other.nombre, daño, self.stun))
+                    self.stun_funcion(2)
+                    daño = self.GUE_ultra(other)
+                    return ("%s atacó a %s con %s usando la ULTRA\nY estará estuneado por %d turnos"
+                        % ( self.nombre, other.nombre, daño, self.stun))
+            elif self.nombre == "Arquera":
+                pass
 
             print("============\n %s: %dHP\n %s: %dHP" % (self.nombre,self.vida,other.nombre,other.vida))
 
 
 
     def __truediv__(self, other):
-        if self.clase == "guerrero":
+        if self.clase == "Guerrero":
 
             if randint(1,100) < self.presicion_critica:
                 print("*CRITICO*")
@@ -344,6 +346,8 @@ def info(turno, Mas = True ,enseñar = False):
             vida1 = J1.vida
 
             while True:
+                print(J1.guardar_vida)
+                print(J1.vida)
                 porcentaje = vida1 - (J1.guardar_vida * (1 / 10))
                 if porcentaje >= 0:
                     BarraDeVida += "□"
