@@ -157,7 +157,7 @@ class guerrero(personajes):
         self.resistencia_debuff = randint(8,12)
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
-        self.clase = "Guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
+        self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
 
 
@@ -222,7 +222,7 @@ class arquero(personajes):
         self.vida = randint(375,425)#vida del jugador
         self.guardar_vida = self.vida
         self.defensa = randint(8,12)#porcentaje que bloquea del ataque
-        self.ataque = randint(40,45)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
+        self.ataque = randint(40,45)#cantidad de puntos de vida en daño fisico que puede infligir al enemigo sin buffs o debuffs
         self.magia = 0
         self.resistencia_magica = randint(16,20)
         self.presicion = randint(20,24)#probabilidad de fallar
