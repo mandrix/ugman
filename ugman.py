@@ -164,7 +164,8 @@ class guerrero(personajes):
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.presicion_critica = randint(34,40)#probabilidad de golpe critico
         self.mana = 0
-        self.resistencia_debuff = 25
+        self.presicion_debuff = randint(20,24)
+        self.resistencia_debuff = randint(8,12)
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
@@ -179,7 +180,7 @@ class arquero():
     w : aumenta el ataque de un aliado escogido y el tuyo por dos turnos (cd 3)
     e : encadena una serie de ataques por 3 turnos los cuales aumentaran su ataque (x1.1 x1.3 x1.5) si ninguno es fallado
         (si es fallado se stunea por un turno)
-        y el tercer ataque tiene un 20% de stunear al enemigo y su bono de ataque se restablece no como la defensa op
+        y el tercer ataque tiene un 20% de stunear al enemigo(+ % de base) y su bono de ataque se restablece no como la defensa op
         del guerrero :v(cd 2 (despues de terminar el encadenamiento))
     r : se pone inmune por 3 turnos y gana un turno despues de usarse(cd 6)
     """
@@ -207,7 +208,8 @@ class arquero():
         elif num == 1:
             self.ataque = 1.3 * self.ataque
         else:
-            other.stun = 1
+            if randint(0,99) < (20 + self.presicion_debuff) -  ((20 + self.presicion_debuff) / other):
+                other.stun = 1
             self.ataque = 1.5 * self.ataque
         daño_0 = (self / other)
         daño_1 = (self / other_2)
@@ -228,6 +230,7 @@ class arquero():
         self.presicion = randint(15,18)#probabilidad de fallar
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.presicion_critica = randint(34,40)#probabilidad de golpe critico
+        self.presicion_debuff = randint(20, 24)
         self.resistencia_debuff = 25
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
@@ -374,7 +377,10 @@ def info(turno, Mas = True ,enseñar = False):
 
 def ini(teclaParam="", multijugador = False):
     global n
+    global quienComienza
+
     n += 1
+
     while console:
         info(n)
         if J1.vida <= 0: return ("¡%s a Ganado!"% J2.nombre)
@@ -412,7 +418,7 @@ def ini(teclaParam="", multijugador = False):
             if J1.vida <= 0: return "¡Jugador2 a Ganado!"
             if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
-            global quienComienza
+
 
             #quien va primero dependiendo de velocidad
             if randint(0,99) < J1.velocidad:
