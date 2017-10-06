@@ -72,7 +72,6 @@ class personajes:
                 other.vida -= daño
                 return ("%.1f"% (daño))
         else:
-
             if randint(1, 100) < self.presicion_critica:
                 return ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100)
             else:
@@ -122,7 +121,9 @@ class guerrero(personajes):
     def opcion(self):
         #Inteligencias artificiales dependiendo de la clase
         prob = randint(0,99)
-        if prob < 40 and prob >= 0:return "a"#40%
+        if self.ultra:
+            prob -= 15
+        if prob < 40:return "a"#40%
         elif prob < 55 and prob >= 40:return "q"#15%
         elif prob < 70 and prob >= 55:return "w"#15%
         elif prob < 85 and prob >= 70:return "e"#15%
@@ -171,11 +172,68 @@ class guerrero(personajes):
 
 
 class arquero():
-    pass
     """
-    alcance
-    rapidez x4 cuando le falte media barra para atacar
+    pasiva : cada golpe hara un segundo golpe de la mitad de su ataque a otro objetivo al azar
+    ataque basico : alcance
+    q : aumenta la probabilidad de fallar en un 70% del enemigo x2 durante 2 turnos(cd 2)
+    w : aumenta el ataque de un aliado escogido y el tuyo por dos turnos (cd 3)
+    e : encadena una serie de ataques por 3 turnos los cuales aumentaran su ataque (x1.1 x1.3 x1.5) si ninguno es fallado
+        (si es fallado se stunea por un turno)
+        y el tercer ataque tiene un 20% de stunear al enemigo y su bono de ataque se restablece no como la defensa op
+        del guerrero :v(cd 2 (despues de terminar el encadenamiento))
+    r : se pone inmune por 3 turnos y gana un turno despues de usarse(cd 6)
     """
+
+    def opcion(self):
+        #Inteligencias artificiales dependiendo de la clase
+        prob = randint(0,99)
+        if self.ultra:
+            prob -= 15
+        if prob < 40:return "a"#40%
+        elif prob < 55 and prob >= 40:return "q"#15%
+        elif prob < 70 and prob >= 55:return "w"#15%
+        elif prob < 85 and prob >= 70:return "e"#15%
+        else:return "r"#15%
+
+    def ARQ_ultra(self):
+        refuerzo = self.defensa
+        self.defensa = 100
+        # le falta incluir el bono de turno ademas de que la defensa le falta reztablecerla en 3 turnos
+
+    def ARQ_trifecta(self, other, other_2, num):
+        if num == 0:
+            self.ataque = self.ataque * 1.1
+        elif num == 1:
+            self.ataque = 1.3 * self.ataque
+        else:
+            self.ataque = 1.5 * self.ataque
+
+        daño_0 = (self / other)
+        daño_1 = (self / other_2)
+
+        return (("%s atacó a %s con %.1f\n%s atacó a %s con %.1f" % (self.nombre, other.nombre, daño_0, self.nombre, other_2.nombre, daño_1)))
+
+    def __init__(self):
+        #habilidades
+        self.habilidades = "Pasiva: daño critico x2\n\rQ: Aumenta velocidad a 18\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
+
+        self.ultra = False
+        self.stun = 0
+        self.vida = randint(450,500)#vida del jugador
+        self.defensa = randint(10,14)#porcentaje que bloquea del ataque
+        self.ataque = randint(55,60)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
+        self.magia = 0
+        self.resistencia_magica = 9
+        self.presicion = randint(15,18)#probabilidad de fallar
+        self.daño_critico = 1.5# porcentaje de aumento de daño ataque
+        self.presicion_critica = randint(34,40)#probabilidad de golpe critico
+        self.resistencia_debuff = 25
+        self.rapidez = 45#comienza el que tenga mas rapidez
+        self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
+        self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
+        self.nombre = ""#nombre que aparece en el juego
+        self.inmunidad =
+
 class orco():
     pass
     """
