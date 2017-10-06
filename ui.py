@@ -55,14 +55,14 @@ def local_mult_ini():
 #UN JUGADOR
 
 def enseñarInfo_func():
-    log.destroy()
-    enseñarInfo.destroy()
-
-
-
     global enseñarInfoMas, mas_menos, enseñarInfoMenos
-    if not mas_menos:
+    log.destroy()
+    enseñarInfoMas.destroy()
+    enseñarInfoMas.destroy()
 
+
+    if not mas_menos:
+        global logMenos
         try:
             logMenos.destroy()
         except:
@@ -85,7 +85,7 @@ def enseñarInfo_func():
         except:
             pass
 
-        global logMenos
+
         logMenos = Label(root, text=ugman.info(ugman.n, True ,True), fg="green", bg="black")
         logMenos.grid(row=5, column=1, sticky=W)
         try:
@@ -122,6 +122,10 @@ def habilidadesJ2Func():
     mensaje = tkinter.messagebox.showinfo("Habilidades J2", ugman.J2.habilidades)
 
 def un_jugador_ini(logParam = ""):
+    global param2, logMas
+    global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
+
+
     Comenzar.destroy()
     Nombre1.destroy()
     nombreJ1.grid_remove()
@@ -160,7 +164,7 @@ def un_jugador_ini(logParam = ""):
 
     ugman.J1.nombre = param1
 
-    global param2, logMas
+
     ugman.J2.nombre = param2
 
     logMas = Label(frameTop, text=ugman.info(ugman.n, False, True), fg="green", bg="black")
@@ -169,7 +173,7 @@ def un_jugador_ini(logParam = ""):
     salir = Button(frameTop, text="Salir", command=root.destroy)
     salir.grid(row=0,column=0)
 
-    global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
+
     habilidadesJ1 = Button(frameTop, text="Habilidades J1", fg="white", bg="blue", command=habilidadesJ1Func)
     habilidadesJ1.grid(row=1, column=0)
 

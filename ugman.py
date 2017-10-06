@@ -233,7 +233,7 @@ class arquero():
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
-        self.inmunidad =
+        self.inmunidad = 0
 
 class orco():
     pass
@@ -373,8 +373,11 @@ def info(turno, Mas = True ,enseñar = False):
 
 
 def ini(teclaParam="", multijugador = False):
-    n += 1
     global n
+    global quienComienza
+
+    n += 1
+
     while console:
         info(n)
         if J1.vida <= 0: return ("¡%s a Ganado!"% J2.nombre)
@@ -412,7 +415,7 @@ def ini(teclaParam="", multijugador = False):
             if J1.vida <= 0: return "¡Jugador2 a Ganado!"
             if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
-            global quienComienza
+
 
             #quien va primero dependiendo de velocidad
             if randint(0,99) < J1.velocidad:
