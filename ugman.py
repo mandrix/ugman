@@ -196,19 +196,19 @@ class arquero():
         else:return "r"#15%
 
     def ARQ_ultra(self):
-        #aekgjojiwnfom
         refuerzo = self.defensa
         self.defensa = 100
         # le falta incluir el bono de turno ademas de que la defensa le falta reztablecerla en 3 turnos
 
     def ARQ_trifecta(self, other, other_2, num):
+        #se stunea por un turno si falla
         if num == 0:
             self.ataque = self.ataque * 1.1
         elif num == 1:
             self.ataque = 1.3 * self.ataque
         else:
+            other.stun = 1
             self.ataque = 1.5 * self.ataque
-
         daño_0 = (self / other)
         daño_1 = (self / other_2)
 
@@ -221,10 +221,10 @@ class arquero():
         self.ultra = False
         self.stun = 0
         self.vida = randint(450,500)#vida del jugador
-        self.defensa = randint(10,14)#porcentaje que bloquea del ataque
+        self.defensa = randint(12,16)#porcentaje que bloquea del ataque
         self.ataque = randint(55,60)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
         self.magia = 0
-        self.resistencia_magica = 9
+        self.resistencia_magica = randint(8,12)
         self.presicion = randint(15,18)#probabilidad de fallar
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.presicion_critica = randint(34,40)#probabilidad de golpe critico
@@ -233,7 +233,7 @@ class arquero():
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
-        self.inmunidad =
+        self.inmunidad = 0
 
 class orco():
     pass
@@ -373,8 +373,8 @@ def info(turno, Mas = True ,enseñar = False):
 
 
 def ini(teclaParam="", multijugador = False):
-    n += 1
     global n
+    n += 1
     while console:
         info(n)
         if J1.vida <= 0: return ("¡%s a Ganado!"% J2.nombre)
