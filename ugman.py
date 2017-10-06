@@ -196,6 +196,7 @@ class arquero():
         else:return "r"#15%
 
     def ARQ_ultra(self):
+        #aekgjojiwnfom
         refuerzo = self.defensa
         self.defensa = 100
         # le falta incluir el bono de turno ademas de que la defensa le falta reztablecerla en 3 turnos
