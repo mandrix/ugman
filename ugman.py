@@ -19,7 +19,7 @@ class personajes:
     def turno(self, other,accion):
 
 
-        if self.stun != 0:
+        if self.stun > 0:
             print("%s está estuneado por %d más turnos, no pudo atacar" % (self.nombre,self.stun-1))
             self.stun -= 1
             if self.stun < 0:
@@ -48,6 +48,7 @@ class personajes:
                 return ("%s ahora tiene una velocidad y golpe critico de %d\n%s atacó a %s con %s"
                         % (self.nombre, self.velocidad,self.nombre,other.nombre,daño))
             else:
+                print ("mkonijnuhvyvtfcre000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000")
                 self.stun_funcion(2)
                 daño = self.GUE_ultra(other)
                 return ("%s atacó a %s con %s usando la ULTRA\nY estará estuneado por %d turnos"
@@ -58,29 +59,35 @@ class personajes:
 
 
     def __truediv__(self, other):
-        ataque = self.ataque
-        defensa = other.defensa
         if self.clase == "guerrero":
 
             if randint(1,100) < self.presicion_critica:
                 print("*CRITICO*")
-                daño = (ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100))*2
+                daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
                 other.vida -= daño
                 return ("%d *CRITICO*" % (daño))
             else:
-                daño = ataque - (ataque * defensa / 100)
+                daño = self.ataque - (self.ataque * self.defensa / 100)
                 other.vida -= daño
                 return ("%.1f"% (daño))
-        else:
+        elif self.clase == "arquero":
             if randint(1, 100) < self.presicion_critica:
-                return ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100)
+                print ("*CRITICO*")
+                daño = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * self.defensa / 100)
+                other.vida -= daño
+                print ("%d *CRITICO*" % (daño))
+           # aqui falta
             else:
-                return ataque - (ataque * defensa / 100)
-
+                daño = self.ataque  - (self.ataque * self.defensa / 100)
+                other.vida -= daño
+            if randint(1,100) < self.presicion_critica:
+                daño = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * self.defensa / 100)
+                other.vida -= (daño / 2)
+            else:
+                daño = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * self.defensa / 100)
+                other.vida -= (daño / 2)
 
     def __init__(self,**kwargs):
-
-
         """
         self.nombre = kwargs["nombre"]
         self.vida = kwargs["vida"]# cantidad de vida :v
@@ -131,7 +138,6 @@ class guerrero(personajes):
 
     def GUE_ultra(self,other):
         if not self.ultra:
-
             other.vida -= 150
             self.ultra = True
             return "150"
@@ -140,7 +146,6 @@ class guerrero(personajes):
     def GUE_critico(self,other):
         ataque = self.ataque
         defensa = other.defensa
-
         print("*CRITICO*")
         daño = (ataque * self.daño_critico - (ataque * self.daño_critico * defensa / 100))*2
         other.vida -= daño
@@ -156,10 +161,11 @@ class guerrero(personajes):
         self.ultra = False
         self.stun = 0
         self.vida = randint(450,500)#vida del jugador
+        self.guardar_vida = self.vida
         self.defensa = randint(10,14)#porcentaje que bloquea del ataque
         self.ataque = randint(55,60)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
         self.magia = 0
-        self.resistencia_magica = 9
+        self.resistencia_magica = randint(8,13)
         self.presicion = randint(15,18)#probabilidad de fallar
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.presicion_critica = randint(34,40)#probabilidad de golpe critico
@@ -201,6 +207,14 @@ class arquero():
         self.defensa = 100
         # le falta incluir el bono de turno ademas de que la defensa le falta reztablecerla en 3 turnos
 
+    def ARQ_beneficio(self, others):
+        self.ataque *= 2
+        others.ataque *= 2
+
+    def ARQ_bomba_de_gas(self,other):
+        if randint(0,99) < (70 + self.presicion_debuff) -  ((70 + self.presicion_debuff) / other):
+            other.presicion *= 2
+
     def ARQ_trifecta(self, other, other_2, num):
         #se stunea por un turno si falla
         if num == 0:
@@ -212,29 +226,29 @@ class arquero():
                 other.stun = 1
             self.ataque = 1.5 * self.ataque
         daño_0 = (self / other)
-        daño_1 = (self / other_2)
+        daño_1 = (self / other_2)# aqui es la mitad
 
         return (("%s atacó a %s con %.1f\n%s atacó a %s con %.1f" % (self.nombre, other.nombre, daño_0, self.nombre, other_2.nombre, daño_1)))
 
     def __init__(self):
         #habilidades
-        self.habilidades = "Pasiva: daño critico x2\n\rQ: Aumenta velocidad a 18\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
+        self.habilidades = "Pasiva: cada ataque genera un ataque extra que sera l mitad de su ataque\n\rQ: aumenta la probabilidad de fallar en un 70% del enemigo x2 durante 2 turnos\n\rW: aumenta el ataque de un aliado escogido y el tuyo por dos turnos\n\rE:hace la trifecta \n\rR:se pone inmune por 3 turnos y gana un turno despues de usarse"
 
         self.ultra = False
         self.stun = 0
-        self.vida = randint(450,500)#vida del jugador
-        self.defensa = randint(12,16)#porcentaje que bloquea del ataque
-        self.ataque = randint(55,60)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
+        self.vida = randint(375,425)#vida del jugador
+        self.defensa = randint(8,12)#porcentaje que bloquea del ataque
+        self.ataque = randint(40,45)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
         self.magia = 0
-        self.resistencia_magica = randint(8,12)
-        self.presicion = randint(15,18)#probabilidad de fallar
+        self.resistencia_magica = randint(16,20)
+        self.presicion = randint(20,24)#probabilidad de fallar
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
-        self.presicion_critica = randint(34,40)#probabilidad de golpe critico
-        self.presicion_debuff = randint(20, 24)
-        self.resistencia_debuff = 25
+        self.presicion_critica = randint(30,35)#probabilidad de golpe critico
+        self.presicion_debuff = randint(15, 20)
+        self.resistencia_debuff = randint(25, 30)
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
-        self.clase = "guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
+        self.clase = "arquero"#dependiendo de la clases, cambia stats, AI y pasivas
         self.nombre = ""#nombre que aparece en el juego
         self.inmunidad = 0
 
@@ -301,10 +315,6 @@ class pirata():
     alcance
     silencia la pasiva del enemigo por 3 turnos
     """
-class abejita ():
-    pass
-
-
 
 J1 = guerrero()
 J2 = guerrero()
@@ -346,10 +356,10 @@ def info(turno, Mas = True ,enseñar = False):
             vida1 = J1.vida
 
             while True:
-                porcentaje = vida1 - (500 * (1 / 10))
+                porcentaje = vida1 - (J1.guardar_vida * (1 / 10))
                 if porcentaje >= 0:
-                    BarraDeVida+="□"
-                    vida1-=(500*(1/10))
+                    BarraDeVida += "□"
+                    vida1-=(J1.guardar_vida * (1 / 10))
                 else:
                     break
 
@@ -357,10 +367,10 @@ def info(turno, Mas = True ,enseñar = False):
             vida2 = J2.vida
 
             while True:
-                porcentaje = vida2 - (500 * (1 / 10))
+                porcentaje = vida2 - (  J2.guardar_vida * (1 / 10))
                 if porcentaje >= 0:
-                    BarraDeVida2+="□"
-                    vida2-=(500*(1/10))
+                    BarraDeVida2 += "□"
+                    vida2-=(J2.guardar_vida * (1 / 10))
                 else:
                     break
             return ("%s: \n%s\n%s: \n%s\n" % (J1.nombre, BarraDeVida,J2.nombre, BarraDeVida2))
