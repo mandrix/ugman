@@ -60,12 +60,10 @@ class personajes:
 
         if intento == False:
             if self.clase == "Guerrero":
+                accion = "a"
                 if accion == "a":
                     daño = (self / other)
-                    if console:
-                        print("\n%s atacó a %s con %d" % (self.nombre, other.nombre, daño))
-                    else:
-                        return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
+                    return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
                 elif accion == "q":
                     self.velocidad_cambiar(20)
                     return ("%s ahora tiene una velocidad de %d\n" % (
@@ -74,7 +72,6 @@ class personajes:
                     self.defensa_cambiar(30)
                     self.efectos["B_defensa"] = [2, True]
                     self.stun_funcion(1)
-                    print("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
                     return ("%s ahora tiene una defensa de %d\nY estará estuneado por %d turnos" % (self.nombre,self.defensa,self.stun))
                 elif accion == "e":
                     self.golpeCritico_cambiar(0)
@@ -96,10 +93,7 @@ class personajes:
                         self.trifecta = 0
                 if accion == "a":
                     daño = (self / other)
-                    if console:
-                        print("\n%s atacó a %s con %d" % (self.nombre,other.nombre,daño))
-                    else:
-                        return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
+                    return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
                 elif accion == "q":
                     return (self.ARQ_Q_bomba_de_gas(other))
                 elif accion == "w":
@@ -113,8 +107,11 @@ class personajes:
                     else:
                         return self.ARQ_E_trifecta(other, equipoB[randint(0, len(equipoB)-1)])
                 else:
-                    return self.ARQ_R_ultra()
-            print("============\n %s: %dHP\n %s: %dHP" % (self.nombre,self.vida,other.nombre,other.vida))
+                    self.stun_funcion(2)
+                    daño = self.GUE_ultra(other)
+                    return ("%s atacó a %s con %s usando la ULTRA\nY estará estuneado por %d turnos"
+                        % ( self.nombre, other.nombre, daño, self.stun))
+
 
 
 
@@ -122,7 +119,6 @@ class personajes:
     def __truediv__(self, other):
         if self.clase == "Guerrero":
             if randint(1,100) < self.precision_critica:
-                print("*CRITICO*")
                 daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
                 other.vida -= (daño) // 1
                 return ("%d *CRITICO*" % (daño))
@@ -192,8 +188,7 @@ class guerrero(personajes):
             return "140"
         return "0"
 
-    def GUE_E_critico(self,other):
-        print("*CRITICO*")
+    def GUE_critico(self,other):
         daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
         other.vida -= daño
         return ("%d *CRITICO*" % (daño))
@@ -312,11 +307,10 @@ class arquero(personajes):
             valor = ("ya termino la trifecta, has stuneado a %s " % (other.nombre))
 
         if randint(1, 100) < self.precision_critica:
-            print("*CRITICO*")
             daño = daño * self.daño_critico - (daño * self.daño_critico * other.defensa / 100)
             other.vida -= daño
+
             critico = "*CRITICO"
-            print("%d *CRITICO*" % (daño))
         else:
             daño = daño - (daño * other.defensa / 100)
             other.vida -= daño
@@ -508,14 +502,7 @@ def info(turno, Mas = True ,enseñar = False):
 
 
 
-    if console:
-        print("##############TURNO %d##############\n"%(turno),15*"=")
-        print("J1\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J1.nombre,J1.clase,J1.vida,J1.defensa,J1.ataque,J1.magia,J1.resistencia_magica,J1.precision))
-        print("\n\n")
-        print("J2\nNombre: %s\nClase: %s\nVida: %d\nDefensa: %d\nAtaque: %d\nMagia: %d\nRM: %d\nPrecision: %d" % (J2.nombre,J2.clase,J2.vida,J2.defensa,J2.ataque,J2.magia,J2.resistencia_magica,J2.precision))
-        print(15*"=","\n")
     if not enseñar:
-        print (J2.precision)
         return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
                 "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
                 % (turno,J1.nombre,J1.clase,J1.vida,J1.daño_critico,J1.defensa,J1.precision_critica,J1.ataque,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.precision,
@@ -526,7 +513,7 @@ def info(turno, Mas = True ,enseñar = False):
             vida1 = J1.vida
 
             while True:
-
+                if vida1 <= 0:BarraDeVida = ""
                 porcentaje = vida1 - (J1.guardar_vida * (1 / 10))
                 if porcentaje >= 0:
                     BarraDeVida += "□"
@@ -538,7 +525,8 @@ def info(turno, Mas = True ,enseñar = False):
             vida2 = J2.vida
 
             while True:
-                porcentaje = vida2 - (  J2.guardar_vida * (1 / 10))
+                if vida1 <= 0: BarraDeVida = ""
+                porcentaje = vida2 - (J2.guardar_vida * (1 / 10))
                 if porcentaje >= 0:
                     BarraDeVida2 += "□"
                     vida2-=(J2.guardar_vida * (1 / 10))
@@ -557,83 +545,57 @@ def info(turno, Mas = True ,enseñar = False):
 
 
 def ini(teclaParam="", multijugador = False):
-    global n
-    global quienComienza
+    global n, quienComienza
 
     n += 1
 
-    while console:
-        info(n)
-        if J1.vida <= 0: return ("¡%s a Ganado!"% J2.nombre)
-        if J2.vida <= 0: return ("¡%s a Ganado!"% J1.nombre)
-        if J1.rapidez < J2.rapidez:
-            pass
-        elif J1.rapidez > J2.rapidez:
-            pass
-        else:
-            if randint(0,1):
-                print("%s:\n"%(J2.nombre))
-                tecla = input("Que ataque quieres realizar: ").lower()
-                print("Turno de %s\n"%(J2.nombre),J2.turno(J1,tecla))
-            else:
-                print("%s:\n"%(J1.nombre))
-                tecla = input("Que ataque quieres realizar: ").lower()
-                print("Turno de %s\n"%(J1.nombre),J1.turno(J2,tecla))
-
-    else:
-        if multijugador:
-            while True:
-                info(n)
-                if J1.vida <= 0: return "¡Jugador2 a Ganado!"
-                if J2.vida <= 0: return "¡Jugador1 a Ganado!"
-
-                global quienComienza
-                if quienComienza == J1.nombre:
-                    quienComienza = J2.nombre
-                    return (J2.turno(J1, teclaParam),"\n%s\n" % (info(n)))
-                else:
-                    quienComienza = J1.nombre
-                    return (J1.turno(J2, teclaParam),"\n%s\n" % (info(n)))
-        else:
-            global equipoA, equipoB
-            if n == 2 :
-                equipoA.append(J1)
-                equipoB.append(J2)
-
+    if multijugador:
+        while True:
             info(n)
             if J1.vida <= 0: return "¡Jugador2 a Ganado!"
             if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
-
-
-            #quien va primero dependiendo de velocidad
-            if randint(0,99) < J1.velocidad:
-                quienComienza = J2.nombre
-
-                return (J1.turno(J2, teclaParam), "\n*Va %s por su velocidad*\n%s\n" % (J1.nombre,info(n)))
-            elif randint(0,99) < J2.velocidad:
-                quienComienza = J1.nombre
-
-                return (J2.turno(J1, J2.opcion()), "\n*Va %s por su velocidad*\n%s\n" % (J2.nombre,info(n)))
-
-
-            #quien va primero dependiendo de quien fue antes
+            global quienComienza
             if quienComienza == J1.nombre:
                 quienComienza = J2.nombre
-                if J1.precision > randint(0,99):
-                    J1.turno(J2, teclaParam, True)
-                    return ("*La precision de %s lo hizo fallar*\n%s" % (J1.nombre, info(n)))
-                return (J1.turno(J2, teclaParam), "\n%s\n" % (info(n)))
+                return (J2.turno(J1, teclaParam),"\n%s\n" % (info(n)))
             else:
                 quienComienza = J1.nombre
+                return (J1.turno(J2, teclaParam),"\n%s\n" % (info(n)))
+    else:
+        global equipoA, equipoB
+        if n == 2 :
+            equipoA.append(J1)
+            equipoB.append(J2)
 
-                if J2.precision > randint(0,99):
-                    J2.turno(J1, teclaParam, True)
-                    return ("*La precision de %s lo hizo fallar*\n%s" % (J2.nombre, info(n)))
-                return (J2.turno(J1, J2.opcion()), "\n%s\n" % (info(n)))
+        info(n)
+        if J1.vida <= 0: return "¡Jugador2 a Ganado!"
+        if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
 
-#si inicia este archivo en vez del ui.py entonces se juega en modo consola
 
-if __name__ == "__main__":
-    console = True
+        #quien va primero dependiendo de velocidad
+        if randint(0,99) < J1.velocidad:
+            quienComienza = J2.nombre
+
+            return (J1.turno(J2, teclaParam), "\n*Va %s por su velocidad*\n%s\n" % (J1.nombre,info(n)))
+        elif randint(0,99) < J2.velocidad:
+            quienComienza = J1.nombre
+
+            return (J2.turno(J1, J2.opcion()), "\n*Va %s por su velocidad*\n%s\n" % (J2.nombre,info(n)))
+
+
+        #quien va primero dependiendo de quien fue antes
+        if quienComienza == J1.nombre:
+            quienComienza = J2.nombre
+            if J1.precision > randint(0,99):
+                J1.turno(J2, teclaParam, True)
+                return ("*La precision de %s lo hizo fallar*\n%s" % (J1.nombre, info(n)))
+            return (J1.turno(J2, teclaParam), "\n%s\n" % (info(n)))
+        else:
+            quienComienza = J1.nombre
+
+            if J2.precision > randint(0,99):
+                J2.turno(J1, teclaParam, True)
+                return ("*La precision de %s lo hizo fallar*\n%s" % (J2.nombre, info(n)))
+            return (J2.turno(J1, J2.opcion()), "\n%s\n" % (info(n)))
