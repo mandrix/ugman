@@ -6,7 +6,8 @@ import tkinter.messagebox
 param2 = ugman.NPC_NOMBRES[random.randint(0,12)]
 param1 = ugman.NPC_NOMBRES[random.randint(0,12)]
 clases = ["gue", "arq"]
-claseJ2 = clases[random.randint(0,len(clases))-1]
+claseJ2 = clases[random.randint(0,0)]#len(clases))-1]
+
 mas_menos = False
 primerTurno = True
 
