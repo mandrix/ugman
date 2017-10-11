@@ -243,7 +243,6 @@ class arquero(personajes):
 
     def ARQ_beneficio(self, grupo):#W
         for x in grupo:
-
             x.ataque *= 1.5
             x.efectos["B_ataque"] = [2, True]
         return ("El ataque de todos los aliados de %s se a aumentado " % (self.nombre))
@@ -353,7 +352,7 @@ class orco(personajes):
         daño_0 = (self / other)
         daño_1 = (self / other2)# aqui es la mitad
 
-        return (("%s atacó a %s con %.1f\n%s atacó a %s con %.1f" % (self.nombre, other.nombre, daño_0, self.nombre, other2.nkvneiuhvieivnerinbiernviernivneionvoiernviorneoivnreovneronvoiernvoiernvoienrvionerovneiornwoinembre, daño_1)))
+        return (("%s atacó a %s con %.1f\n%s atacó a %s con %.1f" % (self.nombre, other.nombre, daño_0, self.nombre, other2.nombre, daño_1)))
 
     def __init__(self):
         #habilidades #listas
@@ -465,7 +464,7 @@ def info(turno, Mas = True ,enseñar = False):
                    J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.precision_critica,J2.ataque,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.precision, quienComienza))
     else:
         if not Mas:
-            BarraDeVida = ""
+            BarraDeVida = "□"
             vida1 = J1.vida
 
             while True:
