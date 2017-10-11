@@ -468,7 +468,7 @@ def info(turno, Mas = True ,enseñar = False):
                 else:
                     break
 
-            BarraDeVida2 = ""
+            BarraDeVida2 = "□"
             vida2 = J2.vida
 
             while True:
