@@ -86,10 +86,8 @@ class personajes:
                     return (self.ARQ_bomba_de_gas(other))
                 elif accion == "w":
                     if self in equipoB:
-                        print("equippoooo:", equipoB,equipoA)
                         return self.ARQ_beneficio(equipoB)
                     else:
-                        print("equippoooo:", equipoB, equipoA)
                         return self.ARQ_beneficio(equipoA)
 
                 elif accion == "e":
@@ -251,10 +249,7 @@ class arquero(personajes):
         # le falta incluir el bono de turno despues de usar esta habilidad ademas de que la defensa le falta reztablecerla en 3 turnos
 
     def ARQ_beneficio(self, grupo):#W
-        print("nuevin",grupo)
         for x in grupo:
-            print("nueviss",x.ataque)
-            print("nuevin1",grupo)
             x.ataque *= 1.5
             x.efectos["B_ataque"] = [2, True]
         return ("El ataque de todos los aliados de %s se a aumentado " % (self.nombre))
@@ -485,7 +480,7 @@ def info(turno, Mas = True ,enseñar = False):
                    J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.precision_critica,J2.ataque,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.precision, quienComienza))
     else:
         if not Mas:
-            BarraDeVida = ""
+            BarraDeVida = "□"
             vida1 = J1.vida
 
             while True:
