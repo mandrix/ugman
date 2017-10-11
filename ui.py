@@ -320,8 +320,6 @@ def start_func():
 
 
 
-
-
 root = Tk()
 root.title("UGMAN")
 
