@@ -189,7 +189,7 @@ class guerrero(personajes):
         if not self.ultra:
             other.vida -= 140
             self.ultra = True
-            return "150"
+            return "140"
         return "0"
 
     def GUE_E_critico(self,other):
@@ -222,7 +222,7 @@ class guerrero(personajes):
         self.precision = randint(11, 15)  # probabilidad de fallar
         self.guardar_precision = self.precision
 
-        self.daño_critico = 1.4# porcentaje de aumento de daño ataque
+        self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.precision_critica = randint(34,40)#probabilidad de golpe critico
         self.precision_debuff = randint(20,24)
         self.resistencia_debuff = randint(8,12)
