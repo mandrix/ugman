@@ -16,40 +16,45 @@ equipoB = []
 class personajes:
 
 
-
-
     def turno(self, other, accion, intento = False):
 
 
         #Turnos debuffs
         for key, value, in self.efectos.items():
+            
             if key == "D_precision":
                 if value[0] != 0:
                     self.efectos[key][0] -= 1
                 elif self.efectos[key][1]:
-                    print("atam ein")
                     self.efectos[key][1] = False
                     self.precision = self.guardar_precision
-            if key == "B_ataque":
+
+            elif key == "B_ataque":
                 if value[0] != 0:
                     self.efectos["B_ataque"][0] -= 1
                 elif self.efectos["B_ataque"][1]:
-                   print("si llega")
                    self.efectos["B_ataque"][1] = False
                    self.ataque = self.guardar_ataque
-            if key == "B_inmunidad:":
+
+            elif key == "B_inmunidad":
                 if value[0] != 0:
                     self.efectos["B_inmunidad"][0] -= 1
                 elif self.efectos["B_inmunidad"][1]:
                     self.efectos["B_inmunidad"][1] = False
-                    print("si llego aqui", self.defensa, self.guardar_defensa)
                     self.defensa = self.guardar_defensa
-            if key == "B_defensa:":
+
+            elif key == "B_defensa":
                if value[0] != 0:
                    self.efectos["B_defensa"][0] -= 1
                elif self.efectos["B_defensa"][1]:
                    self.efectos["B_defensa"][1] = False
                    self.defensa = self.guardar_defensa
+                   
+            elif key == "Trifecta":
+                if intento and self.efectos["Trifecta"][1]:
+                    self.efectos["Trifecta"] = [0, False]
+                    self.stun = 2
+
 
         if self.stun > 0:
             self.stun -= 1
@@ -57,10 +62,9 @@ class personajes:
                 return ("el stun de %s se acabado, pero a perdido este turno" % (self.nombre))
             else:
                 return ("%s está estuneado por %d más turnos y no podra atacar" % (self.nombre, self.stun))
-
-        if intento == False:
+        
+        if not intento:
             if self.clase == "Guerrero":
-                accion = "a"
                 if accion == "a":
                     daño = (self / other)
                     return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
@@ -86,11 +90,8 @@ class personajes:
                         % ( self.nombre, other.nombre, daño, self.stun))
 
             elif self.clase == "Arquero":
-                if self.trifecta != 0:
+                if self.efectos["Trifecta"][0] != 0:
                     accion = "e"
-                    if intento:
-                        self.stun = 1
-                        self.trifecta = 0
                 if accion == "a":
                     daño = (self / other)
                     return ("\n%s atacó a %s con %s" % (self.nombre,other.nombre,daño))
@@ -107,11 +108,7 @@ class personajes:
                     else:
                         return self.ARQ_E_trifecta(other, equipoB[randint(0, len(equipoB)-1)])
                 else:
-                    self.stun_funcion(2)
-                    daño = self.GUE_ultra(other)
-                    return ("%s atacó a %s con %s usando la ULTRA\nY estará estuneado por %d turnos"
-                        % ( self.nombre, other.nombre, daño, self.stun))
-
+                    pass
 
 
 
@@ -188,7 +185,7 @@ class guerrero(personajes):
             return "140"
         return "0"
 
-    def GUE_critico(self,other):
+    def GUE_E_critico(self,other):
         daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
         other.vida -= daño
         return ("%d *CRITICO*" % (daño))
@@ -287,23 +284,25 @@ class arquero(personajes):
     def ARQ_E_trifecta(self, other, other2):
         #se stunea por un turno si falla (listo)
         #(listo)son ataques que se realizan por turnos consecutivamente hasta que llegue el tercero o hasta que falle (hasta que falle nos falta agregar)
-        #le falta return prints ( listo )
-        if self.trifecta  == 0:
+
+        if self.efectos["Trifecta"][0]  == 0:
             daño = self.ataque * 1.1
             daño_1 = self.magia * 1.1
-            self.trifecta += 1
+            self.efectos["Trifecta"][0] += 1
+            self.efectos["Trifecta"][1] = True
             valor = ""
-        elif self.trifecta == 1:
+        elif self.efectos["Trifecta"][0] == 1:
             daño = self.ataque * 1.3
             daño_1 = self.magia * 1.3
-            self.trifecta += 1
+            self.efectos["Trifecta"][0] += 1
             valor = ""
         else:
             if randint(0,99) < (20 + self.precision_debuff) -  ((20 + self.precision_debuff) / other.resistencia_debuff):
                 other.stun = 1
             daño = self.ataque * 1.5
             daño_1 = self.magia * 1.5
-            self.trifecta = 0
+            self.efectos["Trifecta"][0] = 0
+            self.efectos["Trifecta"][1] = False
             valor = ("ya termino la trifecta, has stuneado a %s " % (other.nombre))
 
         if randint(1, 100) < self.precision_critica:
@@ -329,10 +328,9 @@ class arquero(personajes):
     def __init__(self):
         #habilidades
         personajes.__init__(self)
-        self.trifecta = 0
         self.habilidades = "Pasiva: cada ataque genera un ataque extra que sera l mitad de su ataque\n\rQ: aumenta la probabilidad de fallar en un 70% del enemigo x2 durante 2 turnos\n\rW: aumenta el ataque de un aliado escogido y el tuyo por dos turnos\n\rE:hace la trifecta \n\rR:se pone inmune por 3 turnos y gana un turno despues de usarse"
         self.efectos = {"D_precision": [0, False], "B_ataque": [0, False], "B_inmunidad": [0, False],
-                        "B_defensa": [0, False]}
+                        "B_defensa": [0, False], "Trifecta" : [0,False]}
         self.ultra = False
         self.stun = 0
         self.nombre = ""#nombre que aparece en el juego
@@ -342,7 +340,7 @@ class arquero(personajes):
         self.guardar_ataque = self.ataque
         self.magia = randint(18,23)
         self.resistencia_magica = randint(16,20)
-        self.precision = randint(15,18)#probabilidad de fallar
+        self.precision = randint(12,17)#probabilidad de fallar
         self.guardar_precision = self.precision
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.precision_critica = randint(30,35)#probabilidad de golpe critico
