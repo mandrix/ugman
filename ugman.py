@@ -12,6 +12,7 @@ primerTurno = True
 quienComienza = ""
 equipoA = []
 equipoB = []
+LogTurno = []
 
 class personajes:
 
@@ -19,6 +20,8 @@ class personajes:
 
 
     def turno(self, other, accion, intento = False):
+        global LogTurno
+        LogTurno = [accion.upper(),self.nombre]
 
 
         #Turnos debuffs
@@ -118,11 +121,11 @@ class personajes:
     def __truediv__(self, other):
         if self.clase == "Guerrero":
             if randint(1,100) < self.precision_critica:
-                daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
+                daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa // 100))*2
                 other.vida -= (daño) // 1
                 return ("%d *CRITICO*" % (daño))
             else:
-                daño = self.ataque - (self.ataque * other.defensa / 100)
+                daño = self.ataque - (self.ataque * other.defensa // 100)
                 other.vida -= (daño) // 1
                 return (daño)
 
@@ -130,20 +133,20 @@ class personajes:
             global equipoB
             other2 = equipoB[randint(0,len(equipoB)-1)]
             if randint(1, 100) < self.precision_critica:
-                daño1 = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100)
+                daño1 = self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa // 100)
                 other.vida -= daño1
                 critico1 = "*CRITICO*"
             else:
-                daño1 = self.ataque - (self.ataque * other.defensa / 100)
+                daño1 = self.ataque - (self.ataque * other.defensa // 100)
                 other2.vida -= daño1
                 critico1 = ""
             if randint(1, 100) < self.precision_critica:
-                daño2 = (self.magia * self.daño_critico - (self.magia * self.daño_critico * other2.resistencia_magica / 100))
+                daño2 = (self.magia * self.daño_critico - (self.magia * self.daño_critico * other2.resistencia_magica // 100))
                 other2.vida -= daño2
                 critico2 = "*CRITICO*"
                 return ("%d y a %s con %d" % (daño1, other2.nombre, daño2))
             else:
-                daño2 = (self.magia - (self.magia * other2.resistencia_magica / 100))
+                daño2 = (self.magia - (self.magia * other2.resistencia_magica // 100))
                 other2.vida -= daño2
                 critico2 = "*CRITICO"
                 return ("%d %s y a %s con %d %s " % (daño1, critico1,other2.nombre, daño2, critico2 ))
@@ -208,7 +211,7 @@ class guerrero(personajes):
         return "0"
 
     def GUE_critico(self,other):
-        daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa / 100))*2
+        daño = (self.ataque * self.daño_critico - (self.ataque * self.daño_critico * other.defensa // 100))*2
         other.vida -= daño
         return ("%d *CRITICO*" % (daño))
 
@@ -273,7 +276,7 @@ class arquero(personajes):
         return ("El ataque de todos los aliados de %s se a aumentado " % (self.nombre))
 
     def ARQ_Q_bomba_de_gas(self,other):#Q
-        if randint(0,99) < (70 + self.precision_debuff) -  ((70 + self.precision_debuff) / other.resistencia_debuff):
+        if randint(0,99) < (70 + self.precision_debuff) -  ((70 + self.precision_debuff) // other.resistencia_debuff):
             if not other.efectos["D_precision"][1]:
                 other.precision *= 2
                 other.efectos["D_precision"] = [2, True]
@@ -298,7 +301,7 @@ class arquero(personajes):
             self.trifecta += 1
             valor = ""
         else:
-            if randint(0,99) < (20 + self.precision_debuff) -  ((20 + self.precision_debuff) / other.resistencia_debuff):
+            if randint(0,99) < (20 + self.precision_debuff) -  ((20 + self.precision_debuff) // other.resistencia_debuff):
                 other.stun = 1
             daño = self.ataque * 1.5
             daño_1 = self.magia * 1.5
@@ -306,21 +309,21 @@ class arquero(personajes):
             valor = ("ya termino la trifecta, has stuneado a %s " % (other.nombre))
 
         if randint(1, 100) < self.precision_critica:
-            daño = daño * self.daño_critico - (daño * self.daño_critico * other.defensa / 100)
+            daño = daño * self.daño_critico - (daño * self.daño_critico * other.defensa // 100)
             other.vida -= daño
 
             critico = "*CRITICO"
         else:
-            daño = daño - (daño * other.defensa / 100)
+            daño = daño - (daño * other.defensa // 100)
             other.vida -= daño
             critico = ""
 
         if randint(1, 100) < self.precision_critica:
-            daño_1 = (daño_1 * self.daño_critico - (daño_1 * self.daño_critico * other2.resistencia_magica / 100))
+            daño_1 = (daño_1 * self.daño_critico - (daño_1 * self.daño_critico * other2.resistencia_magica // 100))
             other2.vida -= daño_1
             critico2 = "*CRITICO*"
         else:
-            daño_1 = (daño_1 * self.daño_critico - (daño_1 * self.daño_critico * other2.resistencia_magica / 100))
+            daño_1 = (daño_1 * self.daño_critico - (daño_1 * self.daño_critico * other2.resistencia_magica // 100))
             other2.vida -= daño_1
             critico2 = ""
         return (("%s atacó a %s con %.1f %s \n%s atacó a %s con %.1f %s %s" % (self.nombre, other.nombre, daño,critico, self.nombre, other2.nombre, daño_1, critico2,valor )))
@@ -382,7 +385,7 @@ class orco(personajes):
         elif num == 1:
             self.ataque = 1.3 * self.ataque
         else:
-            if randint(0,99) < (20 + self.precision_debuff) -  ((20 + self.precision_debuff) / other):
+            if randint(0,99) < (20 + self.precision_debuff) -  ((20 + self.precision_debuff) // other):
                 other.stun = 1
             self.ataque = 1.5 * self.ataque
         daño_0 = (self / other)
@@ -483,14 +486,15 @@ def definir_clase(claseJ1, claseJ2):
 
 
 
-def info(turno, Mas = True ,enseñar = False):
+def info(turno, Mas = True ,enseñar = False, Habilidad = False):
     if not enseñar:
         global primerTurno, quienComienza
         if primerTurno:
             quienComienza = ((J1.nombre if J1.rapidez > J2.rapidez else J2.nombre) if J1.rapidez != J2.rapidez else (J1.nombre if random.random() < 0.5 else J2.nombre ))
             primerTurno = False
 
-
+    if Habilidad:
+        return ("%s usó %s" % (LogTurno[1],LogTurno[0]))
 
     if not enseñar:
         return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
@@ -504,10 +508,10 @@ def info(turno, Mas = True ,enseñar = False):
 
             while True:
                 if vida1 <= 0:BarraDeVida = ""
-                porcentaje = vida1 - (J1.guardar_vida * (1 / 10))
+                porcentaje = vida1 - int((J1.guardar_vida * (1 / 10)))
                 if porcentaje >= 0:
                     BarraDeVida += "□"
-                    vida1-=(J1.guardar_vida * (1 / 10))
+                    vida1-=int((J1.guardar_vida * (1 / 10)))
                 else:
                     break
 
@@ -516,17 +520,12 @@ def info(turno, Mas = True ,enseñar = False):
 
             while True:
                 if vida1 <= 0: BarraDeVida = ""
-                porcentaje = vida2 - (J2.guardar_vida * (1 / 10))
+                porcentaje = vida2 - int((J2.guardar_vida * (1 / 10)))
                 if porcentaje >= 0:
                     BarraDeVida2 += "□"
-                    vida2-=(J2.guardar_vida * (1 / 10))
+                    vida2-=int((J2.guardar_vida * (1 / 10)))
                 else:
                     break
-
-            if J1.vida <= 0:
-                BarraDeVida = ""
-            elif J2.vida <= 0:
-                BarraDeVida2 = ""
 
             return ("%s: \n%s\n%s: \n%s\n" % (J1.nombre, BarraDeVida,J2.nombre, BarraDeVida2))
         else:

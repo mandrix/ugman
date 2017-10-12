@@ -129,7 +129,13 @@ def habilidadesJ2Func():
 def un_jugador_ini(event = "", logParam = ""):
     global param2, logMas, primerTurno
     global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
+    w = 15
+    frameTop = Frame(root)
+    frameTop.grid(row=0,column=0)
 
+    if not primerTurno:
+        logHabilidad = Label(frameTop, text=ugman.info(ugman.n, Habilidad=True), borderwidth=5 ,width=w)
+        logHabilidad.grid(row=1, column=2, sticky=N)
 
     if primerTurno:
         ugman.definir_clase(claseJ1, claseJ2)
@@ -141,7 +147,7 @@ def un_jugador_ini(event = "", logParam = ""):
     recordar.grid_remove()
     modo.destroy()
 
-    w = 15
+
 
 
     try:
@@ -161,8 +167,7 @@ def un_jugador_ini(event = "", logParam = ""):
 
     root.resizable(height=True, width=True)
 
-    frameTop = Frame(root)
-    frameTop.grid(row=0,column=0)
+
 
     global param1
     if ugman.J1.nombre == " " or ugman.J1.nombre == "":
@@ -187,6 +192,8 @@ def un_jugador_ini(event = "", logParam = ""):
 
     logMas = Label(frameTop, text=ugman.info(ugman.n, False, True), fg="green", bg="black")
     logMas.grid(row=0, column=2, sticky=N)
+
+
 
 
     salir = Button(frameTop, text="Salir", bg="white" ,width=w ,command=root.destroy)
