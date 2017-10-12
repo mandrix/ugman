@@ -204,7 +204,7 @@ class guerrero(personajes):
         if not self.ultra:
             other.vida -= 140
             self.ultra = True
-            return "150"
+            return "140"
         return "0"
 
     def GUE_critico(self,other):
