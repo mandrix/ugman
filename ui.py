@@ -116,7 +116,7 @@ def accionUJ(event=""):
         pass
     else:
         logNuevo = ugman.ini(accion)
-        un_jugador_ini(logNuevo)
+        un_jugador_ini("", logNuevo)
 
 def habilidadesJ1Func():
     mensaje = tkinter.messagebox.showinfo("Habilidades J1", ugman.J1.habilidades)
@@ -124,9 +124,12 @@ def habilidadesJ1Func():
 def habilidadesJ2Func():
     mensaje = tkinter.messagebox.showinfo("Habilidades J2", ugman.J2.habilidades)
 
-def un_jugador_ini(logParam = ""):
+
+
+def un_jugador_ini(event = "", logParam = ""):
     global param2, logMas, primerTurno
     global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
+
 
     if primerTurno:
         ugman.definir_clase(claseJ1, claseJ2)
@@ -185,6 +188,7 @@ def un_jugador_ini(logParam = ""):
     logMas = Label(frameTop, text=ugman.info(ugman.n, False, True), fg="green", bg="black")
     logMas.grid(row=0, column=2, sticky=N)
 
+
     salir = Button(frameTop, text="Salir", bg="white" ,width=w ,command=root.destroy)
     salir.grid(row=1,column=0)
 
@@ -192,19 +196,11 @@ def un_jugador_ini(logParam = ""):
     habilidadesJ1 = Button(frameTop, text="Habilidades J1", fg="white", bg="blue" ,width=w, command=habilidadesJ1Func)
     habilidadesJ1.grid(row=2, column=0)
 
+
     habilidadesJ2 = Button(frameTop, text="Habilidades J2", fg="white", bg="red" ,width=w , command=habilidadesJ2Func)
     habilidadesJ2.grid(row=3, column=0)
 
-    if modoVar.get() == 1:
-        root.bind("q", accionUJ)
-        root.bind("w", accionUJ)
-        root.bind("e", accionUJ)
-        root.bind("r", accionUJ)
-        root.bind("a", accionUJ)
-        root.bind("<space>", accionUJ)
 
-    AccionButton = Button(frameTop, text="ACCIÓN o PASAR", fg="red", bg="black" ,width=w , command=accionUJ)
-    AccionButton.grid(row=5, column=0)
 
     Info = Button(frameTop, text="Información", fg="white", bg="yellow" ,width=w)
     Info.grid(row=4, column=0)
@@ -213,10 +209,25 @@ def un_jugador_ini(logParam = ""):
     Accion.grid(row=5, column=1)
 
     if logParam == "":
-        log = Label(root,text=ugman.info(ugman.n), fg="green", bg="black")
+        log = Label(root,text=ugman.info(ugman.n), fg="green", bg="black", height="40", width="40")
     else:
-        log = Label(root, text=logParam, fg="green", bg="black")
-    log.grid(row=0, column=1)
+        log = Label(root, text=logParam, fg="green", bg="black", height="40", width="40")
+    log.grid(row=0, column=1, sticky="n")
+
+    if modoVar.get() == 1:
+        AccionButton = Button(frameTop, text="PASAR", fg="red", bg="black", width=w, command=accionUJ)
+        AccionButton.grid(row=5, column=0)
+        Accion.grid_remove()
+        root.bind("q", accionUJ)
+        root.bind("w", accionUJ)
+        root.bind("e", accionUJ)
+        root.bind("r", accionUJ)
+        root.bind("a", accionUJ)
+        root.bind("<space>", accionUJ)
+    else:
+        AccionButton = Button(frameTop, text="ACCIÓN o PASAR", fg="red", bg="black", width=w, command=accionUJ)
+        AccionButton.grid(row=5, column=0)
+        root.bind("<Return>", accionUJ)
 
 
 def un_jugador_escogio(clase):
@@ -230,6 +241,7 @@ def un_jugador_escogio(clase):
     modoVar = IntVar()
     modo = Checkbutton(root, text="Modo Teclas", variable=modoVar)
     modo.grid(row=4, column=2)
+    modo.select()
 
     Comenzar = Button(root, text="Comenzar", fg="red", bg="black", command=un_jugador_ini)
     Nombre1 = Label(root, text="J1", fg="red")
@@ -242,9 +254,11 @@ def un_jugador_escogio(clase):
     except:
         nombreJ1 = Entry(root)
 
-    Comenzar.grid(row=2)
+    Comenzar.grid(row=3, column=2)
     Nombre1.grid(row=3, column=0)
     nombreJ1.grid(row=3, column=1)
+
+    root.bind("<Return>", un_jugador_ini)
 
 
 def ARQ1():

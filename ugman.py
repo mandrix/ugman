@@ -114,7 +114,6 @@ class personajes:
 
 
 
-
     #Ataque basico
     def __truediv__(self, other):
         if self.clase == "Guerrero":
@@ -149,6 +148,7 @@ class personajes:
                 critico2 = "*CRITICO"
                 return ("%d %s y a %s con %d %s " % (daño1, critico1,other2.nombre, daño2, critico2 ))
 
+
     def defensa_cambiar(self,opcion):
         self.defensa = opcion
     def stun_funcion(self, opcion):
@@ -159,6 +159,23 @@ class personajes:
         self.golpe_critico = opcion
     def __init__(self):
         self.efectos = {"D_precision" : [0,False], "B_ataque" : [0,False], "B_inmunidad" : [0, False] , "B_defensa" : [0, False] }
+
+
+    #Este init son los variables que toda clase comparte
+    def __init__(self, precision,vida,defensa,ataque):
+        self.efectos = {"D_precision": [0, False], "B_ataque": [0, False], "B_inmunidad": [0, False],
+                        "B_defensa": [0, False]}
+        self.ultra = False
+        self.stun = 0
+        self.nombre = ""
+
+        #Variables de guardar
+        self.guardar_precision = precision
+        self.guardar_vida = vida
+        self.guardar_defensa = defensa
+        self.guardar_ataque = ataque
+
+
 
 class guerrero(personajes):
     """
@@ -181,6 +198,8 @@ class guerrero(personajes):
         elif prob < 90 and prob >= 70:return "e"#20%
         else:return "r"#10%
 
+
+
     def GUE_R_ultra(self,other):
         if not self.ultra:
             other.vida -= 140
@@ -194,29 +213,13 @@ class guerrero(personajes):
         return ("%d *CRITICO*" % (daño))
 
     def __init__(self):
-        personajes.__init__(self)
-        #habilidades
-        self.habilidades = "Pasiva: daño critico x2\n\rQ: Aumenta velocidad a 18\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
-
-        #Variables constantes
-        self.efectos = {"D_precision": [0, False], "B_ataque": [0, False], "B_inmunidad": [0, False],
-                        "B_defensa": [0, False]}
-        self.ultra = False
-        self.stun = 0
-        self.nombre = ""#nombre que aparece en el juego
-
-
-        self.vida = randint(45000,50000)#vida del jugador
-        self.guardar_vida = self.vida
+        self.habilidades = "Pasiva: daño critico x2\n\n\rQ: Aumenta velocidad a 18\n\n\rW: Aumenta defensa a 30 pero se estunea por 2 turnos\n\n\rE: Golpe Critico pero velocidad y golpe critico bajan a 0\n\n\rR: Haces 150 de daño bruto pero quedas estuneado por 2 turnos"
+        self.vida = randint(450,500)#vida del jugador
         self.defensa = randint(10,14)#porcentaje que bloquea del ataque
         self.ataque = randint(50,55)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
-        self.guardar_ataque = self.ataque
         self.magia = 0
         self.resistencia_magica = randint(8,13)
-
         self.precision = randint(11, 15)  # probabilidad de fallar
-        self.guardar_precision = self.precision
-
         self.daño_critico = 1.4# porcentaje de aumento de daño ataque
         self.precision_critica = randint(34,40)#probabilidad de golpe critico
         self.precision_debuff = randint(20,24)
@@ -224,11 +227,7 @@ class guerrero(personajes):
         self.rapidez = 44#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "Guerrero"#dependiendo de la clases, cambia stats, AI y pasivas
-
-        #Varaibles de guardar
-        self.guardar_vida = self.vida
-        self.guardar_defensa = self.defensa
-
+        super().__init__(self.precision,self.vida,self.defensa,self.ataque)
 
 
 class arquero(personajes):
@@ -326,24 +325,16 @@ class arquero(personajes):
             critico2 = ""
         return (("%s atacó a %s con %.1f %s \n%s atacó a %s con %.1f %s %s" % (self.nombre, other.nombre, daño,critico, self.nombre, other2.nombre, daño_1, critico2,valor )))
 
+
     def __init__(self):
-        #habilidades
-        personajes.__init__(self)
         self.trifecta = 0
-        self.habilidades = "Pasiva: cada ataque genera un ataque extra que sera l mitad de su ataque\n\rQ: aumenta la probabilidad de fallar en un 70% del enemigo x2 durante 2 turnos\n\rW: aumenta el ataque de un aliado escogido y el tuyo por dos turnos\n\rE:hace la trifecta \n\rR:se pone inmune por 3 turnos y gana un turno despues de usarse"
-        self.efectos = {"D_precision": [0, False], "B_ataque": [0, False], "B_inmunidad": [0, False],
-                        "B_defensa": [0, False]}
-        self.ultra = False
-        self.stun = 0
-        self.nombre = ""#nombre que aparece en el juego
-        self.vida = randint(37500,42500)#vida del jugador
+        self.habilidades = "Pasiva: Cada ataque genera un ataque extra que sera l mitad de su ataque\n\n\rQ: Aumenta la probabilidad de fallar en un 70% del enemigo x2 durante 2 turnos\n\n\rW: Aumenta el ataque de un aliado escogido y el tuyo por dos turnos\n\n\rE: Hace la trifecta \n\n\rR: Se pone inmune por 3 turnos y gana un turno despues de usarse"
+        self.vida = randint(375,425)#vida del jugador
         self.defensa = randint(8,12)#porcentaje que bloquea del ataque
         self.ataque = randint(40,45)#cantidad de puntos de vida en daño fisico que puede inflijir al enemigo sin buffs o debuffs
-        self.guardar_ataque = self.ataque
         self.magia = randint(18,23)
         self.resistencia_magica = randint(16,20)
         self.precision = randint(15,18)#probabilidad de fallar
-        self.guardar_precision = self.precision
         self.daño_critico = 1.5# porcentaje de aumento de daño ataque
         self.precision_critica = randint(30,35)#probabilidad de golpe critico
         self.precision_debuff = randint(15, 20)
@@ -351,8 +342,8 @@ class arquero(personajes):
         self.rapidez = 50#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "Arquero"#dependiendo de la clases, cambia stats, AI y pasivas
-        self.guardar_vida = self.vida
-        self.guardar_defensa = self.defensa
+        super().__init__(self.precision, self.vida, self.defensa, self.ataque)
+
 
 class orco(personajes):
     """
@@ -378,7 +369,7 @@ class orco(personajes):
     def ORC_ultra(self, other):
         pass
 
-    def ORC_Qrefuerzo(self, other):
+    def ORC_Q_refuerzo(self, other):
         pass
 
     def ARQ_Wespiral(self,other):
@@ -401,9 +392,8 @@ class orco(personajes):
 
     def __init__(self):
         #habilidades #listas
+        super().__init__()
         self.habilidades =  "pasiva : cada vez recibe o hace daño el orco aumenta la defensa por 2% maximo 10 cargas\r\n Q: cura tu vida en 10% + 50% de la defensa actual ofende a todos sun enemigos por 50% durante 1 turno \r\n W: ataca con su bate un ataque giratotio a todos sus enemigos de un 40% de su ataque, entre mas vida te falte mas daño hace\r\nE: se libera de cualquier debuff y a sus aliados cura al aliado con el rango mas bajo de vida por 20%\r\nR : ataca a su objetivo infligiendo todo el hp que te falta + porcentuamente la defensa, lo deja stuneado un turno"
-        self.ultra = False
-        self.stun = 0
         self.vida = randint(50000, 55000)#vida del jugador
         self.guardar_vida = self.vida
         self.defensa = randint(18,22)#porcentaje que bloquea del ataque
@@ -418,8 +408,8 @@ class orco(personajes):
         self.rapidez = 45#comienza el que tenga mas rapidez
         self.velocidad = randint(10,11)#probabilidad en porcentaje de que sea el turno del jugador
         self.clase = "Orco"#dependiendo de la clases, cambia stats, AI y pasivas
-        self.nombre = ""#nombre que aparece en el juego
-        self.inmunidad = 0
+
+
 class mago(personajes):
 
     pass
@@ -505,8 +495,8 @@ def info(turno, Mas = True ,enseñar = False):
     if not enseñar:
         return ("##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
                 "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
-                % (turno,J1.nombre,J1.clase,J1.vida,J1.daño_critico,J1.defensa,J1.precision_critica,J1.ataque,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.precision,
-                   J2.nombre,J2.clase,J2.vida,J2.daño_critico,J2.defensa,J2.precision_critica,J2.ataque,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.precision, quienComienza))
+                % (turno,J1.nombre,J1.clase,(J1.vida if J1.vida > 0 else 0),J1.daño_critico,J1.defensa,J1.precision_critica,J1.ataque,J1.magia,J1.resistencia_debuff,J1.resistencia_magica,J1.velocidad,J1.precision,
+                   J2.nombre,J2.clase,(J2.vida if J2.vida > 0 else 0),J2.daño_critico,J2.defensa,J2.precision_critica,J2.ataque,J2.magia,J2.resistencia_debuff,J2.resistencia_magica,J2.velocidad,J2.precision, quienComienza))
     else:
         if not Mas:
             BarraDeVida = "□"
@@ -532,15 +522,21 @@ def info(turno, Mas = True ,enseñar = False):
                     vida2-=(J2.guardar_vida * (1 / 10))
                 else:
                     break
+
+            if J1.vida <= 0:
+                BarraDeVida = ""
+            elif J2.vida <= 0:
+                BarraDeVida2 = ""
+
             return ("%s: \n%s\n%s: \n%s\n" % (J1.nombre, BarraDeVida,J2.nombre, BarraDeVida2))
         else:
             return (
             "##############TURNO %d##############\n\nJ1\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia_Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\n\n"
             "J2\nNombre: %s\nClase: %s\nVida: %d\nDaño_Crítico: %.1f\nDefensa: %d\nprecision_critica: %d\nAtaque: %d\nMagia: %d\nResistencia Debuff: %d\nResistencia Mágica: %d\nVelocidad: %d\nPrecision: %d\n\nTurno de %s\n"
             % (
-            turno, J1.nombre, J1.clase, J1.vida, J1.daño_critico, J1.defensa, J1.precision_critica, J1.ataque,
+            turno, J1.nombre, J1.clase, (J1.vida if J1.vida > 0 else 0), J1.daño_critico, J1.defensa, J1.precision_critica, J1.ataque,
             J1.magia, J1.resistencia_debuff, J1.resistencia_magica, J1.velocidad, J1.precision,
-            J2.nombre, J2.clase, J2.vida, J2.daño_critico, J2.defensa, J2.precision_critica, J2.ataque,
+            J2.nombre, J2.clase, (J2.vida if J2.vida > 0 else 0), J2.daño_critico, J2.defensa, J2.precision_critica, J2.ataque,
             J2.magia, J2.resistencia_debuff, J2.resistencia_magica, J2.velocidad, J2.precision, quienComienza))
 
 
@@ -551,7 +547,6 @@ def ini(teclaParam="", multijugador = False):
 
     if multijugador:
         while True:
-            info(n)
             if J1.vida <= 0: return "¡Jugador2 a Ganado!"
             if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
@@ -568,13 +563,12 @@ def ini(teclaParam="", multijugador = False):
             equipoA.append(J1)
             equipoB.append(J2)
 
-        info(n)
         if J1.vida <= 0: return "¡Jugador2 a Ganado!"
         if J2.vida <= 0: return "¡Jugador1 a Ganado!"
 
 
-
-        #quien va primero dependiendo de velocidad
+        #quien va primero dependiendo de rapidez pero velocidad es un porcentaje de
+        #ir la siguiente ronda
         if randint(0,99) < J1.velocidad:
             quienComienza = J2.nombre
 
