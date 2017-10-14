@@ -6,24 +6,55 @@ import tkinter.messagebox # Para poner cajas de mensajes en el GUI (i.e Habilida
 import logging # Para el logging de juego
 
 
-def local_mult():
-    #funcion al darle el boton local multijugador
-    local.destroy()
+jugadores = []
+jugador1_escoje = True
 
-    global Comenzar, Nombre1, nombreJ1, Nombre2, nombreJ2
-    Comenzar = Button(root, text="Comenzar", fg="white", bg="#94618E", command=local_mult_ini,font=mainFont)
-    Nombre1 = Label(root, text="J1", fg="red",font=mainFont, bg="#18121E")
-    nombreJ1 = Entry(root)
-    Nombre2 = Label(root, text="J2", fg="red",font=mainFont, bg="#18121E")
-    nombreJ2 = Entry(root)
+#Funciones apartes para escojer la clase
+#Un jugador
+def ARQ1():
+    logging.debug("ARQ1()")
+    top.destroy()
+    un_jugador_escogio("arq")
 
-    Comenzar.grid(row=2)
-    Nombre1.grid(row=3, column=0)
-    Nombre2.grid(row=4, column=0)
-    nombreJ1.grid(row=3, column=1)
-    nombreJ2.grid(row=4, column=1)
+def GUE1():
+    logging.debug("GUE1()")
+    top.destroy()
+    un_jugador_escogio("gue")
+
+#Dos jugadores
+def ARQ2():
+    global jugador1_escoje
+    logging.debug("ARQ2()")
+    if jugador1_escoje:
+        print("1")
+        jugador1_escoje = False
+        jugadores.append("arq")
+    else:
+        jugadores.append("gue")
+        print(jugadores)
+        un_jugador_ini(multijugador=2)
+
+def GUE2():
+    global jugador1_escoje
+    logging.debug("GUE2()")
+    if jugador1_escoje:
+        print("2")
+        jugador1_escoje = False
+        jugadores.append("gue")
+    else:
+        jugadores.append("gue")
+        print(jugadores)
+        un_jugador_ini(multijugador=2)
 
 
+#Dos jugadores
+def escojer_personaje_aux():
+    Comenzar.destroy()
+    nombreJ1_mult.destroy()
+    nombreJ2_mult.destroy()
+    Nombre1.destroy()
+    Nombre2.destroy()
+    escojer_personaje(2)
 
 
 
@@ -84,8 +115,9 @@ def ShowInfoHabilidad():
     tkinter.messagebox.showinfo("Informacion sobre la habilidad", ugman.LogTurno[2])
 
 
-def un_jugador_ini(event = "", logParam = ""):
+def un_jugador_ini(event = "", logParam = "", multijugador=1):
     logging.debug("un_jugador_ini()")
+    #global nombreJ1, nombreJ2
     global nombreJugador2, logVida, primerTurno
     global Accion, log, habilidadesJ1, habilidadesJ2, AccionButton, Info
     w = 15
@@ -105,10 +137,19 @@ def un_jugador_ini(event = "", logParam = ""):
         logHabilidad = Label(frameRight, text=logText, bg="black",fg="green",borderwidth=5 ,width=w,font=GrandeFont)
         logHabilidad.grid(row=1, column=0)
 
-    if primerTurno:
+    if primerTurno and multijugador == 1:
         ugman.definir_clase(claseJ1, claseJ2)
         primerTurno = False
         ugman.J1.nombre = nombreJ1.get()
+
+    if primerTurno and multijugador == 2:
+
+        ugman.definir_clase(jugadores[0], jugadores[1])
+        primerTurno = False
+        print(nombreJ1_mult.get())
+        ugman.J1.nombre = nombreJ1_mult.get()
+        ugman.J2.nombre = nombreJ2_mult.get()
+
 
     Comenzar.destroy()
     Nombre1.destroy()
@@ -190,7 +231,12 @@ def un_jugador_ini(event = "", logParam = ""):
         rondaLog = (ugman.info(ugman.n)).replace("_"," ")
         log = Label(root,text=rondaLog, fg="green", bg="black", height="50", width="60",font=mainFont, bd=8, relief="ridge")
     else:
-        log = Label(root, text=("".join(list(logParam))), fg="green", bg="black", height="50", width="60",font=mainFont, bd=5, relief="sunken")
+        try:
+            temp ="".join(list(logParam))
+        except:
+            temp = logParam
+            print("a:",logParam)
+        log = Label(root, text=(temp), fg="green", bg="black", height="50", width="60",font=mainFont, bd=5, relief="sunken")
     log.grid(row=0, column=1, sticky="n")
 
     if modoVar.get() == 1:
@@ -219,10 +265,10 @@ def un_jugador_escogio(clase):
     claseJ1 = clase
 
     recordarVar = IntVar()
-    recordar = Checkbutton(root, text="Recordar Nombre", variable=recordarVar, fg="white",bg="#18121E",font=mainFont)
+    recordar = Checkbutton(root, text="Recordar Nombre", variable=recordarVar, selectcolor="black",fg="white",bg="#18121E",font=mainFont)
     recordar.grid(row=4, column=1)
     modoVar = IntVar()
-    modo = Checkbutton(root, text="Modo Teclas", variable=modoVar, fg="white",bg="#18121E",font=mainFont)
+    modo = Checkbutton(root, text="Modo Teclas", variable=modoVar, fg="white",selectcolor="black",bg="#18121E",font=mainFont)
     modo.grid(row=4, column=2)
     modo.select()
 
@@ -248,22 +294,15 @@ def un_jugador_escogio(clase):
 
     logging.debug("VARIABLES:\n claseJ1: {}".format(claseJ1))
 
-#Funciones apartes para escojer la clase
-def ARQ1():
-    logging.debug("ARQ1()")
-    top.destroy()
-    un_jugador_escogio("arq")
-
-def GUE1():
-    logging.debug("GUE1()")
-    top.destroy()
-    un_jugador_escogio("gue")
 
 
-def un_jugador():
-    logging.debug("un_jugador()")
 
-    global top
+def escojer_personaje(jugadores = 1):
+    logging.debug("escojer_personaje()")
+
+    global top, jugador1_escoje, local, unJug
+
+    jugador1_escoje = True
 
     #funcion al darle el boton un jugador
     local.destroy()
@@ -274,10 +313,16 @@ def un_jugador():
     top = Frame(root)
     top.grid(row=1, column=1)
 
-    guerreroButt = Button(top, text="Guerrero", bg="grey", width= w, command=GUE1,font=mainFont)
+    if jugadores == 1:
+        funciones = [GUE1,ARQ1]
+    elif jugadores == 2:
+        funciones = [GUE2,ARQ2]
+
+
+    guerreroButt = Button(top, text="Guerrero", bg="grey", width= w, command=funciones[0],font=mainFont)
     guerreroButt.grid(row=0,column=0)
 
-    arqueraButt = Button(top, text="Arquera", bg="green", width= w, command=ARQ1,font=mainFont)
+    arqueraButt = Button(top, text="Arquera", bg="green", width= w, command=funciones[1],font=mainFont)
     arqueraButt.grid(row=0,column=1)
 
     orcoButt = Button(top, text="Orco", bg="#808040", width= w,font=mainFont)
@@ -326,6 +371,7 @@ def un_jugador():
 
 
 def start_func():
+    global local, unJug
     #Funcion al darle el boton de jugar
     start.destroy()
     comoJugar.destroy()
@@ -335,11 +381,32 @@ def start_func():
 
 
 
-    global local, unJug
+
     local = Button(root, text="Local Multijugador", fg="white", bg="#94618E", command=local_mult,font=mainFont)
     local.grid(row=1, column=1)
-    unJug = Button(root, text="Un Jugador", fg="white", bg="#94618E", command=un_jugador,font=mainFont)
+    unJug = Button(root, text="Un Jugador", fg="white", bg="#94618E", command=escojer_personaje,font=mainFont)
     unJug.grid(row=1, column=2)
+
+
+
+def local_mult():
+    #funcion al darle el boton local multijugador
+    local.destroy()
+    unJug.destroy()
+
+    global Comenzar, Nombre1, nombreJ1_mult, Nombre2, nombreJ2_mult
+    Comenzar = Button(root, text="Comenzar", fg="white", bg="#94618E", command=escojer_personaje_aux,font=mainFont)
+    Nombre1 = Label(root, text="J1", fg="red",font=mainFont, bg="#18121E")
+    nombreJ1_mult = Entry(root)
+    Nombre2 = Label(root, text="J2", fg="red",font=mainFont, bg="#18121E")
+    nombreJ2_mult = Entry(root)
+
+    Comenzar.grid(row=2)
+    Nombre1.grid(row=3, column=0)
+    Nombre2.grid(row=4, column=0)
+    nombreJ1_mult.grid(row=3, column=1)
+    nombreJ2_mult.grid(row=4, column=1)
+
 
 
 
@@ -449,6 +516,7 @@ def setup_ui():
 
 
     global nombreJugador1, nombreJugador2, claseJ2, clases, mas_menos, primerTurno,start, comoJugar, root, iconL, mainFont, GrandeFont, Perfil, perfilFont, nombreFont
+
 
     #Font principales
     mainFont = ("Times", 11, "bold")

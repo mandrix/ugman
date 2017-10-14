@@ -4,9 +4,15 @@ import time
 import logging
 import json
 
-#Archivo JSON
-guardado = json.load(open("saves/guardado.json"))
 
+#Archivo JSON
+try:
+    guardado = json.load(open("saves/guardado.json"))
+except:
+    content="{\"Nombre\":\"\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"
+    file = open("saves/guardado.json","w+")
+    file.write(content)
+    file.close()
 
 #globales
 n = 1#los turnos
@@ -18,6 +24,7 @@ quienComienza = ""
 equipoA = []
 equipoB = []
 LogTurno = []
+FinDePartida = False
 
 class personajes:
 
@@ -48,7 +55,7 @@ class personajes:
             elif key == "B_inmunidad":
                 if value[0] == 0:
                     self.efectos[key][1] = False
-                    self.precision = self.guardar_defensa
+                    self.defensa = self.guardar_defensa
 
 
 
@@ -589,7 +596,6 @@ def info(turno, Mas = True ,enseñar = False, Habilidad = False):
             vida1 = J1.vida
 
             while True:
-                logging.debug("\ninfo() VARIABLE BarraDeVida: %s"%(BarraDeVida))
                 if vida1 <= 0:BarraDeVida = ""
                 porcentaje = vida1 - int((J1.guardar_vida * (1 / 10)))
                 if porcentaje >= 0:
@@ -602,7 +608,6 @@ def info(turno, Mas = True ,enseñar = False, Habilidad = False):
             vida2 = J2.vida
 
             while True:
-                logging.debug("\ninfo() VARIABLE BarraDeVida2: %s" % (BarraDeVida2))
                 if vida1 <= 0: BarraDeVida = ""
                 porcentaje = vida2 - int((J2.guardar_vida * (1 / 10)))
                 if porcentaje >= 0:
@@ -625,21 +630,32 @@ def info(turno, Mas = True ,enseñar = False, Habilidad = False):
 
 
 def ini(teclaParam="", multijugador = False):
-    global n, quienComienza
+    global n, quienComienza, FinDePartida
     logging.debug("ini()")
     n += 1
 
-    if multijugador:
+    if multijugador and not FinDePartida:
         logging.debug("\nini() VARIABLES multijugador: True")
         while True:
-            if J1.vida <= 0:
+
+
+            #Retorna quien ganó
+            if J1.vida <= 0 and  FinDePartida:
+                print("a")
+                return "¡Jugador2 a Ganado!"
+            elif J2.vida <= 0 and FinDePartida:
+                print("b")
+                return "¡Jugador1 a Ganado!"
+
+            #Fin de partida si uno de esos if´s son True
+            if J1.vida <= 0 and not FinDePartida:
                 guardado["Derrotas"] += 1
                 content = "{\"Nombre\":\"%s\",\"Victorias\":%d,\"Derrotas\":%d,\"Partidas Jugadas\":%d,\"Logros\":[],\"MODO_HISTORIA\":[]}" % \
                           (guardado["Nombre"],guardado["Victorias"],guardado["Derrotas"],guardado["Partidas Jugadas"])
                 file = open("saves/guardado.json","w+")
                 file.write(content)
                 return "¡Jugador2 a Ganado!"
-            if J2.vida <= 0:
+            if J2.vida <= 0 and not FinDePartida:
                 guardado["Victorias"] += 1
                 content = "{\"Nombre\":\"%s\",\"Victorias\":%d,\"Derrotas\":%d,\"Partidas Jugadas\":%d,\"Logros\":[],\"MODO_HISTORIA\":[]}" % \
                           (guardado["Nombre"],guardado["Victorias"],guardado["Derrotas"],guardado["Partidas Jugadas"])
@@ -654,7 +670,7 @@ def ini(teclaParam="", multijugador = False):
             else:
                 quienComienza = J1.nombre
                 return (J1.turno(J2, teclaParam),"\n%s\n" % (info(n)))
-    else:
+    elif not multijugador:
         logging.debug("\nini() VARIABLES multijugador: False")
         global equipoA, equipoB
         if n == 2 :
@@ -662,7 +678,14 @@ def ini(teclaParam="", multijugador = False):
             equipoA.append(J1)
             equipoB.append(J2)
 
-        if J1.vida <= 0:
+
+        if J1.vida <= 0 and FinDePartida:
+            return "¡Jugador2 a Ganado!"
+        elif J2.vida <= 0 and FinDePartida:
+            return "¡Jugador1 a Ganado!"
+
+        if J1.vida <= 0 and not FinDePartida:
+            print("aaaaa")
             logging.debug("\nini() VARIABLES multijugador: J1.vida: %d\nGano jugador 1"%J1.vida)
             guardado["Partidas Jugadas"] += 1
             guardado["Derrotas"] += 1
@@ -670,8 +693,11 @@ def ini(teclaParam="", multijugador = False):
                       (guardado["Nombre"], guardado["Victorias"], guardado["Derrotas"], guardado["Partidas Jugadas"])
             file = open("saves/guardado.json", "w+")
             file.write(content)
+            FinDePartida = True
+            print("Fin2",FinDePartida)
             return "¡Jugador2 a Ganado!"
-        if J2.vida <= 0:
+        if J2.vida <= 0 and not FinDePartida:
+            print("bbbb")
             logging.debug("\nini() VARIABLES multijugador: J1.vida: %d\nGano jugador 2" % J2.vida)
             guardado["Partidas Jugadas"] += 1
             guardado["Victorias"] += 1
@@ -679,6 +705,8 @@ def ini(teclaParam="", multijugador = False):
                       (guardado["Nombre"], guardado["Victorias"], guardado["Derrotas"], guardado["Partidas Jugadas"])
             file = open("saves/guardado.json", "w+")
             file.write(content)
+            FinDePartida = True
+            print("Fin2",FinDePartida)
             return "¡Jugador1 a Ganado!"
 
 
