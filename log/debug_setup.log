@@ -1,0 +1,264 @@
+INFO:
+
+
+************************
+Inicio del debugging de setup.py
+INFO:Se borró log\debug_setup.log
+INFO:Fin del setup en 0.000s
+************************
+
+
+
+INFO:
+************************
+Inicio del debugging de ui.py
+DEBUG:VARIABLES: 
+nombreJugador1: Hydale
+nombreJugador2: Ithric
+claseJ2: arq
+mas_menos: False
+primerTurno: True
+DEBUG:start_func()
+DEBUG:un_jugador()
+DEBUG:VARIABLES:
+ w: 15
+DEBUG:ARQ1()
+DEBUG:un_jugador_escogio()
+DEBUG:VARIABLES:
+ claseJ1: arq
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE enseñar: False
+primerTurno: True
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: 
+modoVar.get(): 1
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:
+ini() VARIABLES n: 2
+DEBUG:ini() va Ithric
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: (' El ataque de todos los aliados de Ithric se a aumentado ', '\n##############RONDA 2##############\n\nJ1\nNombre: Valkoor\nClase: Arquero\nVida: 392\nDaño_Crítico: 1.5\nDefensa: 8\nprecision_critica: 34\nAtaque: 44\nMagia: 22\nResistencia_Debuff: 25\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 15\n\n\nJ2\nNombre: Ithric\nClase: Arquero\nVida: 414\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 33\nAtaque: 60\nMagia: 22\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n')
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Valkoor
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: ('Valkoor atacó a Ithric con  41  y a Ithric con 18  ', '\n##############RONDA 3##############\n\nJ1\nNombre: Valkoor\nClase: Arquero\nVida: 392\nDaño_Crítico: 1.5\nDefensa: 8\nprecision_critica: 34\nAtaque: 44\nMagia: 22\nResistencia_Debuff: 25\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 8\n\n\nJ2\nNombre: Ithric\nClase: Arquero\nVida: 355\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 33\nAtaque: 60\nMagia: 22\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Ithric\n\n')
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Ithric
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: (' Ithric atacó a Valkoor con 92.0 *CRITICO \nIthric atacó a Valkoor con 30.3  ', '\n##############RONDA 4##############\n\nJ1\nNombre: Valkoor\nClase: Arquero\nVida: 269\nDaño_Crítico: 1.5\nDefensa: 8\nprecision_critica: 34\nAtaque: 44\nMagia: 22\nResistencia_Debuff: 25\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 8\n\n\nJ2\nNombre: Ithric\nClase: Arquero\nVida: 355\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 33\nAtaque: 60\nMagia: 22\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n')
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Valkoor
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: ('Valkoor atacó a Ithric con  61 *CRITICO* y a Ithric con 18  ', '\n##############RONDA 5##############\n\nJ1\nNombre: Valkoor\nClase: Arquero\nVida: 269\nDaño_Crítico: 1.5\nDefensa: 8\nprecision_critica: 34\nAtaque: 44\nMagia: 22\nResistencia_Debuff: 25\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 8\n\n\nJ2\nNombre: Ithric\nClase: Arquero\nVida: 276\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 33\nAtaque: 60\nMagia: 22\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Ithric\n\n')
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Ithric
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+info() VARIABLE BarraDeVida: 
+DEBUG:
+info() VARIABLE BarraDeVida2: 
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Ithric
+logParam: (' Ithric atacó a Valkoor con 72.0  \nIthric atacó a Valkoor con 35.9  ', '\n##############RONDA 6##############\n\nJ1\nNombre: Valkoor\nClase: Arquero\nVida: 161\nDaño_Crítico: 1.5\nDefensa: 8\nprecision_critica: 34\nAtaque: 44\nMagia: 22\nResistencia_Debuff: 25\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 8\n\n\nJ2\nNombre: Ithric\nClase: Arquero\nVida: 276\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 33\nAtaque: 60\nMagia: 22\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n')
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+WARNING:
+************************
+*Fin del Juego*
+************************
+
