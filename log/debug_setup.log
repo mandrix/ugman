@@ -4,7 +4,7 @@ INFO:
 ************************
 Inicio del debugging de setup.py
 INFO:Se borró log\debug_setup.log
-INFO:Fin del setup en -0.006s
+INFO:Fin del setup en -0.016s
 ************************
 
 
@@ -13,8 +13,8 @@ INFO:
 ************************
 Inicio del debugging de ui.py
 DEBUG:VARIABLES: 
-nombreJugador1: Abaet
-nombreJugador2: Hydale
+nombreJugador1: Gibolock
+nombreJugador2: Radag'mal
 claseJ2: arq
 mas_menos: False
 primerTurno: True
@@ -22,6 +22,361 @@ DEBUG:start_func()
 DEBUG:escojer_personaje()
 DEBUG:VARIABLES:
  w: 15
-DEBUG:GUE2()
-DEBUG:ARQ2()
+DEBUG:GUE1()
+DEBUG:un_jugador_escogio()
+DEBUG:VARIABLES:
+ claseJ1: gue
 DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE enseñar: False
+primerTurno: True
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: 
+modoVar.get(): 1
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:
+ini() VARIABLES n: 2
+DEBUG:ini() va Radag'mal
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: (" Radag'mal tiene inmunidad por 2", "\n##############RONDA 2##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 500\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 11\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 403\nDaño_Crítico: 1.5\nDefensa: 100\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Valkoor
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: ("Valkoor atacó a Radag'mal con 0", "\n##############RONDA 3##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 500\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 10\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 403\nDaño_Crítico: 1.5\nDefensa: 100\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Radag'mal\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Radag'mal
+DEBUG:ini() Radag'mal falló
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: *La precision de Radag'mal lo hizo fallar*
+##############RONDA 4##############
+
+J1
+Nombre: Valkoor
+Clase: Guerrero
+Vida: 442
+Daño_Crítico: 1.4
+Defensa: 10
+precision_critica: 37
+Ataque: 55
+Magia: 0
+Resistencia_Debuff: 8
+Resistencia Mágica: 10
+Velocidad: 10
+Precision: 10
+
+
+J2
+Nombre: Radag'mal
+Clase: Arquero
+Vida: 403
+Daño_Crítico: 1.5
+Defensa: 100
+precision_critica: 30
+Ataque: 44
+Magia: 19
+Resistencia Debuff: 28
+Resistencia Mágica: 20
+Velocidad: 11
+Precision: 9
+
+Turno de Valkoor
+
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Radag'mal por velocidad
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: ("Radag'mal atacó a Valkoor con  60 *CRITICO* y a Valkoor con 18  ", "\n*Va Radag'mal por su velocidad*\n##############RONDA 5##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 364\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 10\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 403\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Valkoor
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: ("Valkoor atacó a Radag'mal con 51", "\n##############RONDA 6##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 364\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 10\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 352\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Radag'mal\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Radag'mal
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: (' La precision de Valkoor a sido aumentada por 2 por 2 turnos', "\n##############RONDA 7##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 364\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 20\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 352\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Valkoor
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: ("Valkoor atacó a Radag'mal con 142 *CRITICO*", "\n##############RONDA 8##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 364\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 10\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 210\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Radag'mal\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+DEBUG:accionUJ
+DEBUG:ini()
+DEBUG:
+ini() VARIABLES multijugador: False
+DEBUG:ini() va Radag'mal
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() segundo if
+VARIABLE enseñar: False
+DEBUG:un_jugador_ini()
+DEBUG:info()
+DEBUG:
+info() primer if
+VARIABLE enseñar: False
+DEBUG:
+info() VARIABLE Habilidad: True
+DEBUG:info()
+DEBUG:
+info() VARIABLE enseñar: True
+DEBUG:
+info() VARIABLE enseñar: True
+ Mas: False
+DEBUG:
+w: 15
+primerTurno: False
+recordarVar.get(): 0
+ugman.J1.nombre: Valkoor
+ugman.J2.nombre: Radag'mal
+logParam: ("Radag'mal atacó a Valkoor con  40  y a Valkoor con 26 *CRITICO* ", "\n##############RONDA 9##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 297\nDaño_Crítico: 1.4\nDefensa: 10\nprecision_critica: 37\nAtaque: 55\nMagia: 0\nResistencia_Debuff: 8\nResistencia Mágica: 10\nVelocidad: 10\nPrecision: 10\n\n\nJ2\nNombre: Radag'mal\nClase: Arquero\nVida: 210\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 44\nMagia: 19\nResistencia Debuff: 28\nResistencia Mágica: 20\nVelocidad: 11\nPrecision: 9\n\nTurno de Valkoor\n\n")
+modoVar.get(): 1
+DEBUG:VARIABLES:
+accion: a
+
+WARNING:
+************************
+*Fin del Juego*
+************************
+
