@@ -4,10 +4,24 @@ import assets.files.ugman as ugman#El archivo principal de ugman
 import random #Para conseguir valores aleatores
 import tkinter.messagebox # Para poner cajas de mensajes en el GUI (i.e Habilidades J1)
 import logging # Para el logging de juego
+import time #Para animaciones y guardar datos de time
 
 
 jugadores = []
 jugador1_escoje = True
+
+
+#Funcion para retroceder de pagina
+def atras():
+    global posicion_de_usuario
+
+    if posicion_de_usuario == "perfil":setup_ui("perfil")
+    elif posicion_de_usuario == "start_func":setup_ui("start_func")
+    elif posicion_de_usuario == "local_mult":local_mult()
+    elif posicion_de_usuario == "escojer_personaje1":start_func()
+    elif posicion_de_usuario == "escojer_personaje2":escojer_personaje(2)
+    else:assert NameError("Error de botón de \"atras\"")
+
 
 #Funciones apartes para escojer la clase
 #Un jugador
@@ -172,7 +186,7 @@ def un_jugador_ini(event = "", logParam = "", multijugador=1):
     if recordarVar.get() == 1:
         JSON = json.load(open("./saves/guardado.json"))
         nombreRec = open("./saves/guardado.json","w+")
-        content = "{\"Nombre\":\"%s\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}" % (JSON["Nombre"])
+        content = "{\"Nombre\":\"%s\",\"Fecha\":%s,\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}" % (JSON["Nombre"],JSON["Fecha"])
         nombreRec.write(content)
         nombreRec.close()
 
@@ -183,10 +197,12 @@ def un_jugador_ini(event = "", logParam = "", multijugador=1):
     global nombreJugador1
     if ugman.J1.nombre == " " or ugman.J1.nombre == "":
         try:
-            nombreRec = json.load(open("./saves/guardado.json"))
+            file = open("./saves/guardado.json")
+            nombreRec = json.load(file)
             #nombreRec = open("./saves/.guardado","r")
             #nom = nombreRec.read()
             #nombreRec.close()
+            file.close()
             nombreJugador1 = nombreRec["Nombre"]
 
         except:
@@ -276,14 +292,14 @@ def un_jugador_escogio(clase):
     Nombre1 = Label(root, text="J1", fg="red", bg="#18121E",font=mainFont)
 
     try:
-        nom_r = json.load(open("saves/guardado.json"))
+        file =open("./saves/guardado.json")
+        nom_r = json.load(file)
         #nom = open("./saves/.guardado", "r")
         #nom_r = nom.read()
         nombreJ1 = Entry(root)
         nombreJ1.insert(0, nom_r["Nombre"])
-        print(nom_r["Nombre"])
+        file.close()
     except:
-        raise
         nombreJ1 = Entry(root)
 
     Comenzar.grid(row=3, column=2)
@@ -300,8 +316,14 @@ def un_jugador_escogio(clase):
 def escojer_personaje(jugadores = 1):
     logging.debug("escojer_personaje()")
 
-    global top, jugador1_escoje, local, unJug
+    global top, jugador1_escoje, local, unJug, posicion_de_usuario, atrasButt
 
+    try:
+        atrasButt.destroy()
+    except:
+        pass
+
+    posicion_de_usuario = "escojer_personaje1"
     jugador1_escoje = True
 
     #funcion al darle el boton un jugador
@@ -369,9 +391,21 @@ def escojer_personaje(jugadores = 1):
 
     logging.debug("VARIABLES:\n w: {}".format(w))
 
+    atrasButt = Button(root, text="<--", fg="black", bg="#AAAA00", bd=2, relief="sunken", command=atras)
+    atrasButt.grid(row=0, column=3, pady=0, sticky="ne")
+
 
 def start_func():
-    global local, unJug
+    global local, unJug, posicion_de_usuario, atrasButt, top
+
+    try:
+        top.destroy()
+        atrasButt.destroy()
+    except:
+        pass
+
+    posicion_de_usuario = "start_func"
+
     #Funcion al darle el boton de jugar
     start.destroy()
     comoJugar.destroy()
@@ -387,9 +421,23 @@ def start_func():
     unJug = Button(root, text="Un Jugador", fg="white", bg="#94618E", command=escojer_personaje,font=mainFont)
     unJug.grid(row=1, column=2)
 
+    atrasButt = Button(root, text="<--", fg="black", bg="#AAAA00", bd=2, relief="sunken", command=atras)
+    atrasButt.grid(row=0, column=2, pady=0, sticky="ne")
+
 
 
 def local_mult():
+
+
+    global posicion_de_usuario, atrasButt
+
+    try:
+        atrasButt.destroy()
+    except:
+        pass
+
+    posicion_de_usuario = "local_mult"
+
     #funcion al darle el boton local multijugador
     local.destroy()
     unJug.destroy()
@@ -407,17 +455,21 @@ def local_mult():
     nombreJ1_mult.grid(row=3, column=1)
     nombreJ2_mult.grid(row=4, column=1)
 
+    atrasButt = Button(root, text="<--", fg="black", bg="#AAAA00", bd=2, relief="sunken", command=atras)
+    atrasButt.grid(row=0, column=5, pady=0, sticky="ne")
 
 
 
 #Funcion para ver y editar el perfil
 def perfil():
-    global ListoNombre
+    global ListoNombre, posicion_de_usuario, frameTop
+
+    posicion_de_usuario = "perfil"
 
     start.destroy()
     comoJugar.destroy()
     Perfil.destroy()
-    iconL.destroy()
+    iconL.grid_remove()
 
     logging.debug("perfil()")
 
@@ -425,7 +477,10 @@ def perfil():
     frameTop.grid(row=0,column=0)
 
 
-    def ListoNombre(nombre):
+
+    def ListoNombre(nombre,fecha):
+        global frameContenido, atrasButt
+        fecha = "Inicio de cuenta: "+fecha
 
         frameContenido = Frame(root, bg="#18121E")
         frameContenido.grid(row=1,column=0)
@@ -438,6 +493,10 @@ def perfil():
 
         info = Label(frameTop, text=nombre, font=nombreFont, fg="white" , bg="#18121E")
         info.grid(row=0,column=0)
+
+        info = Label(frameTop, text=fecha, font=mainFont, fg="white" , bg="#18121E")
+        info.grid(row=0,column=3)
+
 
         info = Label(frameTop, text=("Victorias: %s"%(victorias)), font=perfilFont, fg="white" , bg="#18121E")
         info.grid(row=1,column=1, padx=50)
@@ -454,6 +513,10 @@ def perfil():
         info = Label(frameProg, text="Progreso modo historia", font=perfilFont, fg="white", bg="#18121E")
         info.grid(row=0, column=0, padx=50)
 
+        atrasButt = Button(frameTop, text="<--", fg="black", bg="#AAAA00", bd=2, relief="sunken", command=atras)
+        atrasButt.grid(row=0, column=5, pady=0, sticky="ne")
+
+
 
     try:
 
@@ -465,23 +528,27 @@ def perfil():
             partidas = data["Partidas Jugadas"]
             logros = data["Logros"] if len(data["Logros"]) > 0 else ""
             progresoHistoria = data["MODO_HISTORIA"] if len(data["MODO_HISTORIA"]) else ""
+            fecha = data["Fecha"]
 
+            if not fecha:
+                request = time.localtime()
+                fecha = ("%s-%s-%s")%(request[2],request[1],request[0])
 
             def nuevoNombre():
-                def verificar():
+                def verificar(aux=None):
 
-                    nombre_aux = inputNombreTexto.get()
+                    nombre_aux = (inputNombreTexto.get()).capitalize()
                     if nombre_aux == "" or nombre_aux == " ":
                         tkinter.messagebox.showwarning("Error","El nombre debe tener contenido")
                         nuevoNombre()
                     data["Nombre"] = nombre_aux
-                    content = "{\"Nombre\":\"%s\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"%(data["Nombre"])
+                    content = "{\"Nombre\":\"%s\",\"Fecha\":\"%s\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"%(data["Nombre"],fecha)
                     file = open('saves/guardado.json',"w")
                     file.write(content)
                     inputNombreTexto.destroy()
                     inputNombre.destroy()
                     submit.destroy()
-                    ListoNombre(nombre_aux)
+                    ListoNombre(nombre_aux,fecha)
 
 
                 inputNombre = Label(frameTop, text="Nombre",font=mainFont,fg="white",bg="#18121E")
@@ -490,68 +557,88 @@ def perfil():
                 inputNombreTexto.grid(row=0,column=1)
                 submit = Button(frameTop, text="Listo",font=mainFont,command=verificar)
                 submit.grid(row=0,column=2)
+                root.bind("<Return>", verificar)
 
 
 
 
             if nombre == "":
                 nuevoNombre()
+                infoJSON.close()
             else:
-                ListoNombre(nombre)
+                ListoNombre(nombre,fecha)
+                infoJSON.close()
 
 
     except:
-        raise
-        tkinter.messagebox.showwarning("Alerta","El archivo guardado.json no se encuentra. Esto puede significar que no podrás guardar")
-        nombre = "Sin Nombre"
+        tkinter.messagebox.showwarning("Alerta","El archivo guardado.json no se encuentra. Esto puede significar que no podrás guardar y el juego estará corrupto.")
 
 
 
 
 
 #Funcion principal
-def setup_ui():
-    #Creacion de los logs de ui.py
-    logging.info("\n************************\nInicio del debugging de ui.py")
-
-
+def setup_ui(atrasParam=None):
     global nombreJugador1, nombreJugador2, claseJ2, clases, mas_menos, primerTurno,start, comoJugar, root, iconL, mainFont, GrandeFont, Perfil, perfilFont, nombreFont
 
 
-    #Font principales
-    mainFont = ("Times", 11, "bold")
-    GrandeFont = ("Times", 14, "bold")
-    perfilFont = ("Helvetica", 20, "bold italic")
-    nombreFont = ("Helvetica", 22, "bold italic underline")
-
-    #Selecionando los nombres aleatoriamente
-    nombreJugador2 = ugman.NPC_NOMBRES[random.randint(0, 12)]
-    nombreJugador1 = ugman.NPC_NOMBRES[random.randint(0, 12)]
-
-    #Las clases
-    clases = ["gue", "arq"]
-
-    #Automaticamente escojer J2
-    claseJ2 = clases[random.randint(0, len(clases)) - 1]
-
-    mas_menos = False
-    primerTurno = True
-
-
-
-    #Creando la ventana de Tkinter
-    root = Tk()
-    root.title("UGMAN")
-    root.configure(background='#18121E')
-    root.iconbitmap(r'./assets/img/ugman.ico')
-
-    #Agarrando el ugman.png y colocarlo
     try:
-        icon = PhotoImage(file="./assets/img/ugman.png")
+        atrasButt.destroy()
     except:
-        raise NameError("ugman.png no existe o no está en el directorio correcto")
-    iconL = Label(root, image=icon)
-    iconL.grid(row=0, column=1)
+        pass
+
+    if not atrasParam:
+        # Creacion de los logs de ui.py
+        logging.info("\n************************\nInicio del debugging de ui.py")
+
+        # Font principales
+        mainFont = ("Times", 11, "bold")
+        GrandeFont = ("Times", 14, "bold")
+        perfilFont = ("Helvetica", 20, "bold italic")
+        nombreFont = ("Helvetica", 22, "bold italic underline")
+
+        # Selecionando los nombres aleatoriamente
+        nombreJugador2 = ugman.NPC_NOMBRES[random.randint(0, 12)]
+        nombreJugador1 = ugman.NPC_NOMBRES[random.randint(0, 12)]
+
+        # Las clases
+        clases = ["gue", "arq"]
+
+        # Automaticamente escojer J2
+        claseJ2 = clases[random.randint(0, len(clases)) - 1]
+
+        mas_menos = False
+        primerTurno = True
+
+        # Creando la ventana de Tkinter
+        root = Tk()
+        root.title("UGMAN")
+        root.configure(background='#18121E')
+        root.iconbitmap(r'./assets/img/ugman.ico')
+
+        # Agarrando el ugman.png y colocarlo
+        try:
+            icon = PhotoImage(file="./assets/img/ugman.png")
+        except:
+            raise NameError("ugman.png no existe o no está en el directorio correcto")
+        iconL = Label(root, image=icon)
+        iconL.grid(row=0, column=1)
+    elif atrasParam == "perfil":
+        # Agarrando el ugman.png y colocarlo
+        try:
+            icon = PhotoImage(file="./assets/img/ugman.png")
+        except:
+            raise NameError("ugman.png no existe o no está en el directorio correcto")
+        iconL = Label(root, image=icon)
+        iconL.grid(row=0, column=1)
+        frameTop.destroy()
+        frameContenido.destroy()
+    elif atrasParam == "start_func":
+        local.destroy()
+        unJug.destroy()
+
+
+
 
 
     #Botones del menú principal

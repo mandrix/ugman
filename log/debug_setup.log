@@ -4,7 +4,7 @@ INFO:
 ************************
 Inicio del debugging de setup.py
 INFO:Se borró log\debug_setup.log
-INFO:Fin del setup en -0.016s
+INFO:Fin del setup en 0.000s
 ************************
 
 
@@ -13,120 +13,19 @@ INFO:
 ************************
 Inicio del debugging de ui.py
 DEBUG:VARIABLES: 
-nombreJugador1: Orin
-nombreJugador2: Gibolock
-claseJ2: arq
+nombreJugador1: Lerin
+nombreJugador2: Abaet
+claseJ2: gue
 mas_menos: False
 primerTurno: True
 DEBUG:start_func()
-DEBUG:escojer_personaje()
-DEBUG:VARIABLES:
- w: 15
-DEBUG:GUE1()
-DEBUG:un_jugador_escogio()
-DEBUG:VARIABLES:
- claseJ1: gue
-DEBUG:un_jugador_ini()
-DEBUG:info()
-DEBUG:
-info() VARIABLE enseñar: True
-DEBUG:
-info() VARIABLE enseñar: True
- Mas: False
-DEBUG:info()
-DEBUG:
-info() primer if
-VARIABLE enseñar: False
-DEBUG:
-info() VARIABLE enseñar: False
+DEBUG:VARIABLES: 
+nombreJugador1: Lerin
+nombreJugador2: Abaet
+claseJ2: gue
+mas_menos: False
 primerTurno: True
-DEBUG:
-info() segundo if
-VARIABLE enseñar: False
-DEBUG:
-w: 15
-primerTurno: False
-recordarVar.get(): 0
-ugman.J1.nombre: Valkoor
-ugman.J2.nombre: Gibolock
-logParam: 
-modoVar.get(): 1
-DEBUG:habilidadesJ1Func
-DEBUG:accionUJ
-DEBUG:ini()
-DEBUG:
-ini() VARIABLES multijugador: False
-DEBUG:
-ini() VARIABLES n: 2
-DEBUG:ini() va Gibolock
-DEBUG:info()
-DEBUG:
-info() primer if
-VARIABLE enseñar: False
-DEBUG:
-info() segundo if
-VARIABLE enseñar: False
-DEBUG:un_jugador_ini()
-DEBUG:info()
-DEBUG:
-info() primer if
-VARIABLE enseñar: False
-DEBUG:
-info() VARIABLE Habilidad: True
-DEBUG:info()
-DEBUG:
-info() VARIABLE enseñar: True
-DEBUG:
-info() VARIABLE enseñar: True
- Mas: False
-DEBUG:
-w: 15
-primerTurno: False
-recordarVar.get(): 0
-ugman.J1.nombre: Valkoor
-ugman.J2.nombre: Gibolock
-logParam: ('Gibolock atacó a Valkoor con  53 *CRITICO* y a Valkoor con 30 *CRITICO* ', '\n##############RONDA 2##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 380\nDaño_Crítico: 1.4\nDefensa: 14\nprecision_critica: 37\nAtaque: 54\nMagia: 0\nResistencia_Debuff: 9\nResistencia Mágica: 12\nVelocidad: 10\nPrecision: 13\n\n\nJ2\nNombre: Gibolock\nClase: Arquero\nVida: 422\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 41\nMagia: 22\nResistencia Debuff: 27\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 9\n\nTurno de Valkoor\n\n')
-modoVar.get(): 1
-DEBUG:VARIABLES:
-accion: 
-
-DEBUG:habilidadesJ1Func
-DEBUG:accionUJ
-DEBUG:ini()
-DEBUG:
-ini() VARIABLES multijugador: False
-DEBUG:ini() va Valkoor
-DEBUG:info()
-DEBUG:
-info() primer if
-VARIABLE enseñar: False
-DEBUG:
-info() segundo if
-VARIABLE enseñar: False
-DEBUG:un_jugador_ini()
-DEBUG:info()
-DEBUG:
-info() primer if
-VARIABLE enseñar: False
-DEBUG:
-info() VARIABLE Habilidad: True
-DEBUG:info()
-DEBUG:
-info() VARIABLE enseñar: True
-DEBUG:
-info() VARIABLE enseñar: True
- Mas: False
-DEBUG:
-w: 15
-primerTurno: False
-recordarVar.get(): 0
-ugman.J1.nombre: Valkoor
-ugman.J2.nombre: Gibolock
-logParam: ('Valkoor atacó a Gibolock con 140 usando la ULTRA\nY estará estuneado por 2 turnos', '\n##############RONDA 3##############\n\nJ1\nNombre: Valkoor\nClase: Guerrero\nVida: 380\nDaño_Crítico: 1.4\nDefensa: 14\nprecision_critica: 37\nAtaque: 54\nMagia: 0\nResistencia_Debuff: 9\nResistencia Mágica: 12\nVelocidad: 10\nPrecision: 14\n\n\nJ2\nNombre: Gibolock\nClase: Arquero\nVida: 282\nDaño_Crítico: 1.5\nDefensa: 9\nprecision_critica: 30\nAtaque: 41\nMagia: 22\nResistencia Debuff: 27\nResistencia Mágica: 17\nVelocidad: 10\nPrecision: 9\n\nTurno de Gibolock\n\n')
-modoVar.get(): 1
-DEBUG:VARIABLES:
-accion: r
-
+DEBUG:start_func()
 WARNING:
 ************************
 *Fin del Juego*

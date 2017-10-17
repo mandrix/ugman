@@ -1,8 +1,8 @@
-import assets.files.ui as ui#Para iniciar el GUI
+
 import logging #Para crear los logs
 import os #Para borrar logs viejos, mover archivos y crear directorios
 import time
-import json #Parra crear el archivo de perfil
+
 
 def setup():
     #Lista de todos los cambios
@@ -50,7 +50,36 @@ def setup():
         os.makedirs(directory)
         cambios.append("Creacion de ", directory)
 
-    #Un log por cada archivo python
+
+    #Verificando que todos los archivos están
+    try:
+        open("./assets/sounds/musica/batalla.mp3")
+        open("./assets/sounds/musica/ini.mp3")
+        open("./assets/sounds/sonidos/alerta.mp3")
+        open("./assets/sounds/sonidos/boton.mp3")
+        open("./assets/sounds/sonidos/menu_boton.mp3")
+        open("./assets/sounds/sonidos/critical.mp3")
+    except:
+        assert NameError("Uno de los archivos de sonido no existen o no están donde deberian.")
+
+    try:
+        open("./assets/img/ugman.png")
+        open("./assets/img/ugman.ico")
+    except:
+        assert NameError("Uno de los archivos de imagen no existen o no están donde deberian.")
+
+    try:
+        open("./files/img/ugman.py")
+        open("./files/img/ui.py")
+    except:
+        assert NameError("Uno de los archivos de programación no existen o no están donde deberian.")
+
+
+
+
+
+
+    #Objeto de logging
     logging.basicConfig(filename='log\debug_setup.log',format='%(levelname)s:%(message)s', level=logging.DEBUG)
     logging.info("\n\n\n************************\nInicio del debugging de setup.py")
 
@@ -60,47 +89,22 @@ def setup():
         file = open("saves/guardado.json","r")
         if file.read() == "":
             raise NameError("Archivo json está corrupto")
-    except:
+        print("n")
 
-        content="{\"Nombre\":\"\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"
+    except:
+        print("a")
+        content="{\"Nombre\":\"\",\"Fecha\":\"\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"
         file = open("saves/guardado.json","w+")
         file.write(content)
     file.close()
 
-    #Mover archivos si es necesario
-    try:
-        file = "./ugman.png"
-        os.rename(file,"./assets/img/ugman.png")
-        logging.warning("ugman.png estaba en el directorio incorrecto, se pasó a /assets/img/ugman.png")
-    except:
-        pass
-
-    try:
-        file = "./.guardado"
-        os.rename(file,"./saves/.guardado")
-        logging.warning(".guardado estaba en el directorio incorrecto, se pasó a /assets/img/.guardado")
-    except:
-        pass
-
-    try:
-        file = "./ugman.py"
-        os.rename(file,"./assets/files/ugman.py")
-        logging.warning("ugman.py estaba en el directorio incorrecto, se pasó a /assets/img/ugman.py")
-    except:
-        pass
-
-    try:
-        file = "./ui.py"
-        os.rename(file,"./assets/files/ui.py")
-        logging.warning("ui.py estaba en el directorio incorrecto, se pasó a /assets/img/ui.py")
-    except:
-        pass
 
     for cambio in cambios:
         logging.info(cambio)
 
 
     logging.info("Fin del setup en %.3fs\n************************\n\n\n" % (tiempo1 - time.time()))
+    import assets.files.ui as ui  # Para iniciar el GUI
     ui.setup_ui()
     logging.warning("\n************************\n*Fin del Juego*\n************************\n")
 

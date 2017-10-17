@@ -7,16 +7,16 @@ import json
 
 #Archivo JSON
 try:
-    guardado = json.load(open("saves/guardado.json"))
+    file = open("saves/guardado.json")
+    guardado = json.load(file)
 except:
-    content="{\"Nombre\":\"\",\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"
+    content="{\"Nombre\":\"\",\"Fecha\":null,\"Victorias\":0,\"Derrotas\":0,\"Partidas Jugadas\":0,\"Logros\":[],\"MODO_HISTORIA\":[]}"
     file = open("saves/guardado.json","w+")
     file.write(content)
-    file.close()
+file.close()
 
 #globales
 n = 1#los turnos
-console = False# bool que dice si está en modo consola
 NPC_NOMBRES = ["Abaet","Bildon","Codern","Darmor","Etran","Gibolock","Hydale","Ithric","Lerin","Nuwolf","Orin","Radag'mal","Ethan","Tyrion"]
 ACCIONES = ["a","q","w","e","r"]#todas las acciones posibles
 primerTurno = True
@@ -654,6 +654,7 @@ def ini(teclaParam="", multijugador = False):
                           (guardado["Nombre"],guardado["Victorias"],guardado["Derrotas"],guardado["Partidas Jugadas"])
                 file = open("saves/guardado.json","w+")
                 file.write(content)
+                file.close()
                 return "¡Jugador2 a Ganado!"
             if J2.vida <= 0 and not FinDePartida:
                 guardado["Victorias"] += 1
@@ -661,6 +662,7 @@ def ini(teclaParam="", multijugador = False):
                           (guardado["Nombre"],guardado["Victorias"],guardado["Derrotas"],guardado["Partidas Jugadas"])
                 file = open("saves/guardado.json","w+")
                 file.write(content)
+                file.close()
                 return "¡Jugador1 a Ganado!"
 
             global quienComienza
@@ -695,6 +697,7 @@ def ini(teclaParam="", multijugador = False):
             file.write(content)
             FinDePartida = True
             print("Fin2",FinDePartida)
+            file.close()
             return "¡Jugador2 a Ganado!"
         if J2.vida <= 0 and not FinDePartida:
             print("bbbb")
@@ -707,6 +710,7 @@ def ini(teclaParam="", multijugador = False):
             file.write(content)
             FinDePartida = True
             print("Fin2",FinDePartida)
+            file.close()
             return "¡Jugador1 a Ganado!"
 
 
