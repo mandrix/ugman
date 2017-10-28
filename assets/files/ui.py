@@ -1,3 +1,4 @@
+import winsound # Sonido
 import json #Para leer el archivo JSON guardadon.json
 from tkinter import * #Para el GUI
 import assets.files.ugman as ugman#El archivo principal de ugman
@@ -463,6 +464,9 @@ def local_mult():
 #Funcion para ver y editar el perfil
 def perfil():
     global ListoNombre, posicion_de_usuario, frameTop
+
+    sound = "C:/Users/Usuario/Desktop/Programming/projects/Projects/ugman-master/assets/sounds/sonidos/menu_boton.wav"
+    winsound.PlaySound(sound,winsound.SND_FILENAME)
 
     posicion_de_usuario = "perfil"
 
