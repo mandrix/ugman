@@ -1,4 +1,7 @@
-import winsound # Sonido
+try:
+    import winsound # Sonido
+except:
+    pass
 import json #Para leer el archivo JSON guardadon.json
 from tkinter import * #Para el GUI
 import assets.files.ugman as ugman#El archivo principal de ugman
@@ -618,7 +621,7 @@ def setup_ui(atrasParam=None):
         root = Tk()
         root.title("UGMAN")
         root.configure(background='#18121E')
-        root.iconbitmap(r'./assets/img/ugman.ico')
+#        root.iconbitmap(r'./assets/img/ugman.ico')
 
         # Agarrando el ugman.png y colocarlo
         try:
