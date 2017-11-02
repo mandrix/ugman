@@ -32,23 +32,18 @@ def setup():
     directory = "./log"
     if not os.path.exists(directory):
         os.makedirs(directory)
-        cambios.append("Creacion de ",directory)
     directory = "./saves"
     if not os.path.exists(directory):
         os.makedirs(directory)
-        cambios.append("Creacion de ", directory)
     directory = "./assets/img"
     if not os.path.exists(directory):
         os.makedirs(directory)
-        cambios.append("Creacion de ", directory)
     directory = "./assets/sounds"
     if not os.path.exists(directory):
         os.makedirs(directory)
-        cambios.append("Creacion de ", directory)
     directory = "./assets/files"
     if not os.path.exists(directory):
         os.makedirs(directory)
-        cambios.append("Creacion de ", directory)
 
 
     #Verificando que todos los archivos están
